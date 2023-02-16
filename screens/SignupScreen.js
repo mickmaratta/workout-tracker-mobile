@@ -1,14 +1,32 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import AuthContent from "../components/Auth/AuthContent";
+import Title from "../components/ui/Title";
 
 const SignupScreen = () => {
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
+
+  function signUpHandler() {
+    //TO DO
+  }
+
+  if (isAuthenticating) {
+    return <LoadingOverlay message="Logging you in..." />;
+  }
   return (
-    <View>
-      <Text>SignupScreen</Text>
-    </View>
-  )
-}
+    <SafeAreaView style={styles.container}>
+      <AuthContent onAuthenticate={signUpHandler} />
+    </SafeAreaView>
+  );
+};
 
-export default SignupScreen
+const styles = StyleSheet.create({
+  container: {
+      alignItems: "center",
+      justifyContent: "center",
+    }
+})
 
-const styles = StyleSheet.create({})
+export default SignupScreen;
+
+
