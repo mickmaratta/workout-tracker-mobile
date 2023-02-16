@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
@@ -6,6 +6,7 @@ import { Colors } from "../../constants/GlobalStyles";
 import AuthForm from "./AuthForm";
 import FlatButton from "../ui/FlatButton";
 import Title from "../ui/Title";
+import IconButton from "../ui/Icon";
 
 const AuthContent = ({ isLogin, onAuthenticate }) => {
   const navigation = useNavigation();
@@ -25,15 +26,36 @@ const AuthContent = ({ isLogin, onAuthenticate }) => {
     }
   }
 
+  //CHECK IF INPUTS ARE VALID
   function submitHandler(credentials) {
-    let { email, confirmEmail, password, confirmPassword } = credentials;
+    let { email, password, confirmPassword, username } = credentials;
+    email = email.trim();
+    password = password.trim();
 
-    //TO DO
+    const emailIsValid = email.includes("@");
+    const passwordIsValid = password.length >= 6;
+    const passwordsAreEqual = password === confirmPassword;
+
+    if (!emailIsValid || !passwordIsValid) {
+      Alert.alert("Invalid input", "Please check your entered credentials.");
+      setCredentialsInvalid({
+        email: !emailIsValid,
+        password: !passwordIsValid,
+        confirmPassword: !passwordIsValid || !passwordsAreEqual,
+      });
+      return;
+    }
+    onAuthenticate(credentials);
   }
 
   return (
     <View style={styles.container}>
       <Title style={styles.title}>Workout Planner</Title>
+      <IconButton
+        size={50}
+        icon="barbell-outline"
+        color={Colors.secondary300}
+      />
       <View style={styles.authContent}>
         <AuthForm
           isLogin={isLogin}
@@ -55,21 +77,21 @@ export default AuthContent;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.primary500,
-    marginTop: 62,
     borderRadius: 20,
-    justifyContent: "center",
+    flex: 1,
+    alignItems: "center",
     width: "90%",
+    marginTop: 20,
   },
   title: {
-    color: Colors.secondary300
+    color: Colors.secondary300,
+    marginBottom: 10,
   },
   authContent: {
-    marginTop: 10,
     marginHorizontal: 32,
-    paddingVertical: 26,
+    marginVertical: 10,
     paddingHorizontal: 16,
-    borderRadius: 8,
-    backgroundColor: Colors.backgroundColor500,
+    width: "100%",
     elevation: 2,
     shadowColor: "black",
     shadowOffset: { width: 1, height: 1 },

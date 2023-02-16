@@ -1,14 +1,22 @@
-import { useContext, useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useState } from "react";
 import { Alert, SafeAreaView, StyleSheet } from "react-native";
 import AuthContent from "../components/Auth/AuthContent";
 import LoadingOverlay from "../components/ui/LoadingOverlay";
-import Title from "../components/ui/Title";
+import { auth } from "../firebase";
 
 function LoginScreen() {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
 
-  function loginHandler() {
-    //TO DO
+  async function loginHandler({email, password}) {
+    setIsAuthenticating(true);
+    try {
+      const res = await signInWithEmailAndPassword(auth, email, password);
+      console.log('Login Success')
+    } catch (error) {
+      console.log('Login Failed')
+    }
+    setIsAuthenticating(false);
   }
 
   if (isAuthenticating) {
@@ -24,7 +32,7 @@ function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
       alignItems: "center",
-      justifyContent: "center",
+      flex: 1,
     }
 })
 
