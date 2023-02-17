@@ -1,13 +1,15 @@
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import AuthContent from "../components/Auth/AuthContent";
-import Title from "../components/ui/Title";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase";
+
 import LoadingOverlay from "../components/ui/LoadingOverlay";
+import { storeUser } from "../util/http";
 
 const SignupScreen = () => {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const [err, setErr] = useState(false);
 
   async function signUpHandler({email, password, username}) {
     setIsAuthenticating(true);
@@ -17,11 +19,20 @@ const SignupScreen = () => {
       await updateProfile(res.user, {
         displayName: username,
       });
+      //Create user on firestore
+      await storeUser({
+        uid: res.user.uid,
+        displayName: username,
+        email,
+        createdAt: new Date().getTime(),
+        workouts: [],
+        favoriteWorkouts: [],
+      })
       console.log('Signup Success')
     } catch (error) {
-      console.log('Login Failed')
+      setErr(true);
+      setIsAuthenticating(false);
     }
-    setIsAuthenticating(false);
   }
 
   if (isAuthenticating) {
@@ -29,7 +40,7 @@ const SignupScreen = () => {
   }
   return (
     <SafeAreaView style={styles.container}>
-      <AuthContent onAuthenticate={signUpHandler} />
+      <AuthContent onAuthenticate={signUpHandler} error={err} />
     </SafeAreaView>
   );
 };

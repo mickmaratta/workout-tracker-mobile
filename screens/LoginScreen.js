@@ -1,22 +1,24 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
-import { Alert, SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import AuthContent from "../components/Auth/AuthContent";
-import LoadingOverlay from "../components/ui/LoadingOverlay";
 import { auth } from "../firebase";
+
+import LoadingOverlay from "../components/ui/LoadingOverlay";
 
 function LoginScreen() {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const [err, setErr] = useState(false);
 
-  async function loginHandler({email, password}) {
+  async function loginHandler({ email, password }) {
     setIsAuthenticating(true);
     try {
-      const res = await signInWithEmailAndPassword(auth, email, password);
-      console.log('Login Success')
+      await signInWithEmailAndPassword(auth, email, password);
+      console.log("Login Success");
     } catch (error) {
-      console.log('Login Failed')
+      setErr(true);
+      setIsAuthenticating(false);
     }
-    setIsAuthenticating(false);
   }
 
   if (isAuthenticating) {
@@ -24,16 +26,16 @@ function LoginScreen() {
   }
   return (
     <SafeAreaView style={styles.container}>
-      <AuthContent onAuthenticate={loginHandler} isLogin />
+      <AuthContent onAuthenticate={loginHandler} isLogin error={err} />
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-      alignItems: "center",
-      flex: 1,
-    }
-})
+    alignItems: "center",
+    flex: 1,
+  },
+});
 
 export default LoginScreen;

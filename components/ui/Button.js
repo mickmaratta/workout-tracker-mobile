@@ -2,14 +2,14 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { Colors } from '../../constants/GlobalStyles';
 
-function Button({ children, onPress }) {
+function Button({ children, onPress, buttonStyle, textStyle }) {
   return (
     <Pressable
-      style={({ pressed }) => [styles.button, pressed && styles.pressed]}
+      style={({ pressed }) => [styles.button, buttonStyle, pressed && styles.pressed]}
       onPress={onPress}
     >
       <View>
-        <Text style={styles.buttonText}>{children}</Text>
+        <Text style={[styles.buttonText, textStyle]}>{children}</Text>
       </View>
     </Pressable>
   );

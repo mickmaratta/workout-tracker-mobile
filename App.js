@@ -38,10 +38,13 @@ function AuthenticatedStack() {
 function Navigation() {
   const { currentUser } = useContext(AuthContext);
   return (
+    <>
+    <StatusBar style="auto"/>
     <NavigationContainer>
       {!currentUser && <AuthStack />}
       {currentUser && <AuthenticatedStack />}
     </NavigationContainer>
+    </>
   );
 }
 export default function App() {

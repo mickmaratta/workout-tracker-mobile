@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import Button from '../ui/Button';
-import Title from '../ui/Title';
 import Input from './Input';
 
 function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
@@ -55,7 +54,7 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
         />
         {!isLogin && (
           <Input
-            label="Enter Username"
+            label="Enter Username (Optional)"
             onUpdateValue={updateInputValueHandler.bind(this, 'username')}
             value={enteredUsername}
           />

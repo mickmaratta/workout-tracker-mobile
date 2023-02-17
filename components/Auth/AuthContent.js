@@ -8,7 +8,7 @@ import FlatButton from "../ui/FlatButton";
 import Title from "../ui/Title";
 import IconButton from "../ui/Icon";
 
-const AuthContent = ({ isLogin, onAuthenticate }) => {
+const AuthContent = ({ isLogin, onAuthenticate, error }) => {
   const navigation = useNavigation();
 
   const [credentialsInvalid, setCredentialsInvalid] = useState({
@@ -63,8 +63,9 @@ const AuthContent = ({ isLogin, onAuthenticate }) => {
           credentialsInvalid={credentialsInvalid}
         />
         <View style={styles.buttons}>
+          {error && <Text style={styles.errorText}>Oops something went wrong! Try again.</Text>}
           <FlatButton onPress={switchAuthModeHandler}>
-            {isLogin ? "Create a new user" : "Log in instead"}
+            {isLogin ? "Create new account" : "Log in instead"}
           </FlatButton>
         </View>
       </View>
@@ -101,4 +102,10 @@ const styles = StyleSheet.create({
   buttons: {
     marginTop: 8,
   },
+  errorText: {
+    color: Colors.error500,
+    textAlign: "center",
+    fontWeight: '200',
+    fontSize: 16,
+  }
 });
