@@ -14,7 +14,6 @@ function LoginScreen() {
     setIsAuthenticating(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      console.log("Login Success");
     } catch (error) {
       setErr(true);
       setIsAuthenticating(false);

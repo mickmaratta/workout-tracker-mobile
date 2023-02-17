@@ -28,7 +28,6 @@ const SignupScreen = () => {
         workouts: [],
         favoriteWorkouts: [],
       })
-      console.log('Signup Success')
     } catch (error) {
       setErr(true);
       setIsAuthenticating(false);

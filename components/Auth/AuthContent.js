@@ -6,7 +6,7 @@ import { Colors } from "../../constants/GlobalStyles";
 import AuthForm from "./AuthForm";
 import FlatButton from "../ui/FlatButton";
 import Title from "../ui/Title";
-import IconButton from "../ui/Icon";
+import IconButton from "../ui/IconButton";
 
 const AuthContent = ({ isLogin, onAuthenticate, error }) => {
   const navigation = useNavigation();
@@ -55,6 +55,7 @@ const AuthContent = ({ isLogin, onAuthenticate, error }) => {
         size={50}
         icon="barbell-outline"
         color={Colors.secondary300}
+        style={styles.iconButton}
       />
       <View style={styles.authContent}>
         <AuthForm
@@ -87,6 +88,12 @@ const styles = StyleSheet.create({
   title: {
     color: Colors.secondary300,
     marginBottom: 10,
+  },
+  iconButton: {
+    borderWidth: 2,
+    borderColor: Colors.secondary300,
+    borderRadius: "100%",
+    padding: 10,
   },
   authContent: {
     marginHorizontal: 32,

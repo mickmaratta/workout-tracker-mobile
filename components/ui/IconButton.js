@@ -1,14 +1,13 @@
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../../constants/GlobalStyles";
 
-const IconButton = ({ icon, color, size, style }) => {
+const IconButton = ({ icon, color, size, style, onPress }) => {
   return (
-
-      <View style={[styles.buttonContainer, style]}>
+      <Pressable onPress={onPress} style={({pressed}) => [((pressed && onPress) && styles.pressed), styles.buttonContainer, style]}>
         <Ionicons name={icon} size={size} color={color} />
-      </View>
+      </Pressable>
   );
 };
 
@@ -16,12 +15,12 @@ export default IconButton;
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    padding: 10,
+    marginHorizontal: 10,
     marginVertical: 5,
-    borderWidth: 2,
-    borderColor: Colors.secondary300,
-    borderRadius: "100%",
     justifyContent: "center",
     alignItems: "center",
-  }
+  },
+  pressed: {
+    opacity: 0.7
+}
 });
