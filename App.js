@@ -8,6 +8,8 @@ import { useContext } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { signOut } from "firebase/auth";
 import { auth } from "./firebase";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignupScreen";
@@ -24,22 +26,25 @@ const Tab = createBottomTabNavigator();
 function TabNavigator() {
   return (
     <Tab.Navigator
-    screenOptions={({ navigation }) => ({
-      headerStyle: { backgroundColor: Colors.primary500 },
-      headerTintColor: Colors.neutral100,
-      tabBarStyle: { backgroundColor: Colors.primary500 },
-      tabBarActiveTintColor: Colors.secondary500,
-      headerRight: () => {
-        return (
-          <IconButton
-          onPress={() => signOut(auth)}
-          icon="log-out-outline"
-          size={28}
-          color={Colors.secondary300}
-          />
-        );
-      },
-    })}>
+      screenOptions={({ navigation }) => ({
+        headerStyle: { backgroundColor: Colors.primary500 },
+        headerTintColor: Colors.secondary300,
+        headerTitleStyle: { fontSize: 22 },
+        tabBarStyle: { backgroundColor: Colors.primary500 },
+        tabBarActiveTintColor: Colors.secondary700,
+        tabBarInactiveTintColor: Colors.secondary300,
+        headerRight: () => {
+          return (
+            <IconButton
+              onPress={() => signOut(auth)}
+              icon="log-out-outline"
+              size={28}
+              color={Colors.secondary300}
+            />
+          );
+        },
+      })}
+    >
       <Tab.Screen
         name="Workouts"
         component={AllWorkoutsScreen}
@@ -96,7 +101,6 @@ function AuthStack() {
   );
 }
 
-
 //Authenticated Stack
 function AuthenticatedStack() {
   return (
@@ -128,8 +132,9 @@ function Navigation() {
 export default function App() {
   return (
     <AuthContextProvider>
-      <Navigation />
+      <Provider store={store}>
+        <Navigation />
+      </Provider>
     </AuthContextProvider>
   );
 }
-

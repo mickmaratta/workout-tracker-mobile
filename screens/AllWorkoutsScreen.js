@@ -1,21 +1,28 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import Button from '../components/ui/Button'
-import { signOut } from 'firebase/auth'
-import { auth } from '../firebase'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import Title from '../components/ui/Title'
-import Header from '../components/Header'
+import { useEffect } from "react";
 import { Colors } from '../constants/GlobalStyles'
-
+import WorkoutList from '../components/WorkoutList'
+import { useDispatch, useSelector } from "react-redux";
+import { DUMMY_DATA} from "../models/workout";
+import {workoutStart, workoutFailure, getWorkoutsSuccess } from "../redux/workoutsSlice";
+ 
 const AllWorkoutsScreen = () => {
+const dispatch = useDispatch();
+const workouts = useSelector((state) => state.workouts.workouts)
 
+  useEffect(() => {
+    dispatch(workoutStart());
+    try {
+      dispatch(getWorkoutsSuccess(DUMMY_DATA))
+    } catch (error) {
+      dispatch(workoutFailure)
+    }
+  }, [])
   
   return (
     <View style={styles.container}>
-      <View style={styles.content}>
-        <Text>Workouts</Text>
-      </View>
+      <WorkoutList workouts={workouts} />
     </View>
   )
 }
