@@ -1,6 +1,8 @@
 export const Colors = {
     neutral100: "#0A0C0D", 
     neutral800: "#F2F2F2", 
+    neutralGray300: "#939393",
+    neutralGray500: "#cacaca",
     primary300: "#115959", // Texts
     primary500: "#00BFB2", // Texts
     primary700: "#2EF2BB", // Texts

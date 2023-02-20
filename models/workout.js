@@ -27,5 +27,22 @@ export const DUMMY_DATA = [
       }
     ]
   }]
+},
+{
+  _createdAt: date,
+  _id: "e2",
+  title: "Test 2",
+  desc: "This is also a test",
+  exercises: [{
+    id: "ex1",
+    title: "Military Press",
+    sets: [
+      {
+        number: "1",
+        reps: "12",
+        weight: "10",
+      }
+    ]
+  }]
 }
 ];

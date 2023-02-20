@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { useEffect } from "react";
 import { Colors } from '../constants/GlobalStyles'
-import WorkoutList from '../components/WorkoutList'
+import WorkoutList from '../components/Workouts/WorkoutList'
 import { useDispatch, useSelector } from "react-redux";
 import { DUMMY_DATA} from "../models/workout";
 import {workoutStart, workoutFailure, getWorkoutsSuccess } from "../redux/workoutsSlice";
