@@ -18,6 +18,7 @@ import FavoriteWorkoutsScreen from "./screens/FavoriteWorkoutsScreen";
 import ManageWorkoutScreen from "./screens/ManageWorkoutScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import IconButton from "./components/ui/IconButton";
+import ViewWorkoutScreen from "./screens/ViewWorkoutScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -106,12 +107,22 @@ function AuthenticatedStack() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: false,
-        contentStyle: { backgroundColor: Colors.primary500 },
+        headerStyle: { backgroundColor: Colors.primary500 },
+        headerTintColor: Colors.secondary300,
+        headerTitleStyle: { fontSize: 22 },
       }}
     >
-      <Stack.Screen name="TabNavigator" component={TabNavigator} />
-      <Stack.Screen name="AllWorkouts" component={AllWorkoutsScreen} />
+      <Stack.Screen name="TabNavigator" component={TabNavigator} 
+      options={{
+        headerShown: false,
+      }}
+      />
+      <Stack.Screen name="AllWorkouts" component={AllWorkoutsScreen}
+      options={{
+        headerShown: false,
+      }}
+      />
+      <Stack.Screen name="ViewWorkout" component={ViewWorkoutScreen} />
     </Stack.Navigator>
   );
 }
