@@ -16,7 +16,8 @@ export const DUMMY_DATA = [
   _id: "e1",
   title: "Test",
   desc: "This is a test",
-  exercises: [{
+  exercises: [
+    {
     id: "ex1",
     title: "Military Press",
     sets: [
@@ -24,9 +25,31 @@ export const DUMMY_DATA = [
         number: "1",
         reps: "12",
         weight: "10",
-      }
+      },
+      {
+        number: "2",
+        reps: "12",
+        weight: "10",
+      },
     ]
-  }]
+  },
+    {
+    id: "ex2",
+    title: "Push Up",
+    sets: [
+      {
+        number: "1",
+        reps: "12",
+        weight: "10",
+      },
+      {
+        number: "2",
+        reps: "12",
+        weight: "10",
+      },
+    ]
+  },
+]
 },
 {
   _createdAt: date,

@@ -28,11 +28,11 @@ function TabNavigator() {
   return (
     <Tab.Navigator
       screenOptions={({ navigation }) => ({
-        headerStyle: { backgroundColor: Colors.primary500 },
+        headerStyle: { backgroundColor: Colors.neutral800 },
         headerTintColor: Colors.secondary300,
         headerTitleStyle: { fontSize: 22 },
-        tabBarStyle: { backgroundColor: Colors.primary500 },
-        tabBarActiveTintColor: Colors.secondary700,
+        tabBarStyle: { backgroundColor: Colors.neutral800 },
+        tabBarActiveTintColor: Colors.primary500,
         tabBarInactiveTintColor: Colors.secondary300,
         headerRight: () => {
           return (
@@ -107,7 +107,7 @@ function AuthenticatedStack() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: Colors.primary500 },
+        headerStyle: { backgroundColor: Colors.neutral800 },
         headerTintColor: Colors.secondary300,
         headerTitleStyle: { fontSize: 22 },
       }}
