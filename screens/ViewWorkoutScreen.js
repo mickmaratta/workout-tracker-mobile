@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import SwitchSelector from "../components/ui/SwitchSelector";
 import ExerciseLabel from "../components/Workouts/ExerciseLabel";
 import { Colors } from "../constants/GlobalStyles";
+import Set from "../components/Workouts/Set";
 
 const ViewWorkoutScreen = ({ route, navigation }) => {
   const { workout } = route.params;
@@ -29,7 +30,14 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
         <FlatList
           data={workout.exercises}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <ExerciseLabel exercise={item} />}
+          renderItem={({ item }) => (
+          <>
+          <ExerciseLabel exercise={item} />
+          {!collapsed && item.sets.map((set) => (
+            <Set key={set.number} set={set}/>
+          ))}
+          </>
+          )}
         />
       </View>
       <View style={styles.descContainer}>

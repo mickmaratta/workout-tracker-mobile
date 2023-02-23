@@ -16,10 +16,10 @@ const SwitchSelector = ({ left, right, onPress }) => {
   }
   return (
     <View style={styles.container}>
-        <Pressable style={[styles.buttonLeft, leftPressed && styles.pressed]} onPress={() => {handleSwitch(left)}} >
+        <Pressable style={[styles.button, leftPressed && styles.pressed]} onPress={() => {handleSwitch(left)}} >
           <Text style={styles.text}>{left}</Text>
         </Pressable>
-      <Pressable style={[styles.buttonRight, !leftPressed && styles.pressed]} onPress={() => {handleSwitch()}}>
+      <Pressable style={[styles.button, !leftPressed && styles.pressed]} onPress={() => {handleSwitch()}}>
         <Text style={styles.text}>{right}</Text>
       </Pressable>
     </View>
@@ -36,17 +36,11 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     margin: 10,
     borderRadius: 20,
-    borderWidth: 2,
+    borderWidth: 1,
+    borderColor: Colors.neutralGray500
   },
-  buttonLeft: {
-    borderTopLeftRadius: 20,
-    borderBottomLeftRadius: 20,
-    paddingVertical: 8,
-    paddingHorizontal: 10
-  },
-  buttonRight: {
-    borderTopRightRadius: 20,
-    borderBottomRightRadius: 20,
+  button: {
+    borderRadius: 20,
     paddingVertical: 8,
     paddingHorizontal: 10
   },
