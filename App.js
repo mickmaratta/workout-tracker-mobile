@@ -111,6 +111,7 @@ function AuthenticatedStack() {
         headerStyle: { backgroundColor: Colors.neutral800 },
         headerTintColor: Colors.neutral100,
         headerTitleStyle: { fontSize: 22 },
+        headerShown: false,
       }}
     >
       <Stack.Screen name="TabNavigator" component={TabNavigator} 

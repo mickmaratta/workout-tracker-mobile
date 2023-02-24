@@ -5,6 +5,7 @@ import SwitchSelector from "../components/ui/SwitchSelector";
 import ExerciseLabel from "../components/Workouts/ExerciseLabel";
 import { Colors } from "../constants/GlobalStyles";
 import Set from "../components/Workouts/Set";
+import Header from "../components/ui/Header"
 
 const ViewWorkoutScreen = ({ route, navigation }) => {
   const { workout } = route.params;
@@ -21,6 +22,7 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
 
   return (
     <View>
+      <Header back={true}>{workout.title}</Header>
       <SwitchSelector
         left="Collapsed"
         right="Expanded"
