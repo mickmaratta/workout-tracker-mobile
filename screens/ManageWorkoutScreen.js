@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import Header from '../components/Header'
+import Header from '../components/ui/Header'
 
 const ManageWorkoutScreen = () => {
   return (
-    <Text>Manage Workouts</Text>
+    <View>
+      <Header>Add Workout</Header>
+    </View>
   )
 }
 

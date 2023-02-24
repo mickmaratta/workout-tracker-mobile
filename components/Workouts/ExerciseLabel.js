@@ -16,12 +16,12 @@ export default ExerciseLabel
 const styles = StyleSheet.create({
     container: {
         borderBottomColor: Colors.neutralGray500,
-        borderBottomWidth: 2,
+        borderBottomWidth: 1,
         margin: 10
     },
     titleText: {
         fontSize: 24,
-        color: Colors.secondary300,
+        color: Colors.neutral100,
         marginBottom: 8,
     },
     setsText: {

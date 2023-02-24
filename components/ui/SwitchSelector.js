@@ -17,10 +17,10 @@ const SwitchSelector = ({ left, right, onPress }) => {
   return (
     <View style={styles.container}>
         <Pressable style={[styles.button, leftPressed && styles.pressed]} onPress={() => {handleSwitch(left)}} >
-          <Text style={styles.text}>{left}</Text>
+          <Text style={[styles.text, leftPressed && styles.pressedText]}>{left}</Text>
         </Pressable>
       <Pressable style={[styles.button, !leftPressed && styles.pressed]} onPress={() => {handleSwitch()}}>
-        <Text style={styles.text}>{right}</Text>
+        <Text style={[styles.text, !leftPressed && styles.pressedText]}>{right}</Text>
       </Pressable>
     </View>
   );
@@ -49,6 +49,9 @@ const styles = StyleSheet.create({
     padding: 2
   },
   pressed: {
-    backgroundColor: Colors.primary500,
+    backgroundColor: Colors.secondary300,
   },
+  pressedText: {
+    color: Colors.neutral800,
+  }
 });

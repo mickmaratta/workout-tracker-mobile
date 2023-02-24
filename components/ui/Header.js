@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import Title from "./ui/Title";
-import IconButton from "./ui/IconButton";
-import { Colors } from "../constants/GlobalStyles";
+import Title from "./Title";
+import IconButton from "./IconButton";
+import { Colors } from "../../constants/GlobalStyles";
 import { signOut } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth } from "../../firebase";
 
 const Header = ({ children }) => {
 
@@ -26,9 +26,11 @@ export default Header;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.primary500,
+    backgroundColor: Colors.neutral800,
     marginTop: 54,
     paddingBottom: 10,
+    alignItems: "center",
+    justifyContent: "center"
   },
   icon: {
     position: "absolute",

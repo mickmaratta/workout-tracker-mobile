@@ -6,6 +6,7 @@ import WorkoutList from '../components/Workouts/WorkoutList'
 import { useDispatch, useSelector } from "react-redux";
 import { DUMMY_DATA} from "../models/workout";
 import {workoutStart, workoutFailure, getWorkoutsSuccess } from "../redux/workoutsSlice";
+import Header from '../components/ui/Header';
  
 const AllWorkoutsScreen = () => {
 const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const workouts = useSelector((state) => state.workouts.workouts)
   
   return (
     <View style={styles.container}>
+      <Header>All Workouts</Header>
       <WorkoutList workouts={workouts} />
     </View>
   )

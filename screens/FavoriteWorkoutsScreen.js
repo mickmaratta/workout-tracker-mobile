@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import Header from '../components/Header'
+import React from 'react';
+import Header from '../components/ui/Header';
 
 const FavoriteWorkoutsScreen = () => {
   return (
     <View>
-      <Text>Favorite Workouts</Text>
+      <Header>Favorites</Header>
     </View>
   )
 }

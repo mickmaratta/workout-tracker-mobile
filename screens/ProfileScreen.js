@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import Header from '../components/Header'
+import Header from '../components/ui/Header'
 
 const ProfileScreen = () => {
   return (
-    <Text>Your Profile</Text>
+    <View>
+      <Header>Profile</Header>
+    </View>
   )
 }
 

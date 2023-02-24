@@ -34,6 +34,7 @@ function TabNavigator() {
         tabBarStyle: { backgroundColor: Colors.neutral800 },
         tabBarActiveTintColor: Colors.primary500,
         tabBarInactiveTintColor: Colors.secondary300,
+        headerShown: false,
         headerRight: () => {
           return (
             <IconButton
@@ -108,7 +109,7 @@ function AuthenticatedStack() {
     <Stack.Navigator
       screenOptions={{
         headerStyle: { backgroundColor: Colors.neutral800 },
-        headerTintColor: Colors.secondary300,
+        headerTintColor: Colors.neutral100,
         headerTitleStyle: { fontSize: 22 },
       }}
     >
