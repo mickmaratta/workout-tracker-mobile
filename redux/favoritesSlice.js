@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const favoritesSlice = createSlice({
   name: "favorite",
   initialState: {
-    favorites: [],
+    favorites: ["e1"],
     isFetching: false,
     error: false,
   },

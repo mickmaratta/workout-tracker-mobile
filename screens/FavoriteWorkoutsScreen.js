@@ -1,11 +1,22 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/ui/Header';
+import { useSelector } from 'react-redux';
+import WorkoutList from '../components/Workouts/WorkoutList';
 
 const FavoriteWorkoutsScreen = () => {
+  const favWorkoutIds = useSelector(state => state.favorites.favorites);
+  const workouts = useSelector((state) => state.workouts.workouts);
+  const [favorites, setFavorites] = useState([]);
+
+  useEffect(() => {
+    setFavorites(workouts.filter((workout) => favWorkoutIds.includes(workout._id)))
+  }, []);
+
   return (
-    <View>
+    <View style={styles.container}>
       <Header>Favorites</Header>
+      <WorkoutList workouts={favorites} />
     </View>
   )
 }

@@ -22,7 +22,7 @@ const workouts = useSelector((state) => state.workouts.workouts)
   }, [])
   
   return (
-    <View style={styles.container}>
+    <View>
       <Header>All Workouts</Header>
       <WorkoutList workouts={workouts} />
     </View>
@@ -31,12 +31,4 @@ const workouts = useSelector((state) => state.workouts.workouts)
 
 export default AllWorkoutsScreen
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  content: {
-    backgroundColor: Colors.neutral800,
-    flex: 1,
-  }
-})
+const styles = StyleSheet.create({})
