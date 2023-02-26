@@ -11,7 +11,8 @@ const SignupScreen = () => {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [err, setErr] = useState(false);
 
-  async function signUpHandler({email, password, username}) {
+  //Register user function
+  async function registerHandler({email, password, username}) {
     setIsAuthenticating(true);
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
@@ -34,12 +35,14 @@ const SignupScreen = () => {
     }
   }
 
+  //Loading Screen
   if (isAuthenticating) {
     return <LoadingOverlay message="Registering user..." />;
   }
+
   return (
     <SafeAreaView style={styles.container}>
-      <AuthContent onAuthenticate={signUpHandler} error={err} />
+      <AuthContent onAuthenticate={registerHandler} error={err} />
     </SafeAreaView>
   );
 };

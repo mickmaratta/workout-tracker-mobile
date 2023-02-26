@@ -17,8 +17,8 @@ import AllWorkoutsScreen from "./screens/AllWorkoutsScreen";
 import FavoriteWorkoutsScreen from "./screens/FavoriteWorkoutsScreen";
 import ManageWorkoutScreen from "./screens/ManageWorkoutScreen";
 import ProfileScreen from "./screens/ProfileScreen";
-import IconButton from "./components/ui/IconButton";
 import ViewWorkoutScreen from "./screens/ViewWorkoutScreen";
+import IconButton from "./components/ui/IconButton";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -129,6 +129,7 @@ function AuthenticatedStack() {
   );
 }
 
+// Check to see if user is Authenticated
 function Navigation() {
   const { currentUser } = useContext(AuthContext);
   return (

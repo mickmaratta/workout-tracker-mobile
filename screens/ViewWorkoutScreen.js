@@ -1,6 +1,5 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
 import SwitchSelector from "../components/ui/SwitchSelector";
 import ExerciseLabel from "../components/Workouts/ExerciseLabel";
 import { Colors } from "../constants/GlobalStyles";

@@ -10,6 +10,7 @@ function LoginScreen() {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [err, setErr] = useState(false);
 
+  //Login function
   async function loginHandler({ email, password }) {
     setIsAuthenticating(true);
     try {
@@ -20,9 +21,11 @@ function LoginScreen() {
     }
   }
 
+  //Loading screen
   if (isAuthenticating) {
     return <LoadingOverlay message="Logging you in..." />;
   }
+
   return (
     <SafeAreaView style={styles.container}>
       <AuthContent onAuthenticate={loginHandler} isLogin error={err} />
