@@ -22,8 +22,8 @@ const ManageWorkoutScreen = ({ navigation }) => {
 
   function addNewExercise() {
     const newExercise = {
-      title: 'Title',
-      sets: [{number: 1, reps: 0, weight: 0}],
+      title: 'Exercise',
+      sets: [{number: 1, reps: '0', weight: '0'}],
       id: uuid()
     }
     setExercises([...exercises, newExercise])
@@ -61,7 +61,7 @@ const ManageWorkoutScreen = ({ navigation }) => {
             onPress={() => addNewExercise()}
           >
             <Text style={styles.text}>Add Exercise</Text>
-            <IconButton icon="add-circle-outline" size={28} />
+            <IconButton icon="add-circle" size={28} color={Colors.primary500} />
           </Pressable>
         </View>
       </View>
@@ -73,16 +73,18 @@ export default ManageWorkoutScreen;
 
 const styles = StyleSheet.create({
   inputsContainer: {
-    marginHorizontal: 16,
   },
   titleText: {
     fontSize: 32,
     marginBottom: 10,
+    paddingLeft: 12,
   },
   text: {
+    paddingLeft: 12,
     fontSize: 20,
   },
   addContainer: {
+    marginTop: 10,
     flexDirection: "row",
     alignItems: "center",
   },

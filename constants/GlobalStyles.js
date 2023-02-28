@@ -11,4 +11,6 @@ export const Colors = {
     secondary700: "#1c59cb",
     error500: "#c70707",
     error700: "#ff8484",
+    success500: "#7cd472",
+    success300: "#1a7810",
 }
