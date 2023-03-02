@@ -4,7 +4,7 @@ import IconButton from "../ui/IconButton";
 import { Colors } from "../../constants/GlobalStyles";
 import Set from "./Set";
 
-const ManageExercise = ({ addExercise, exercise }) => {
+const ManageExercise = ({ removeExercise, exercise }) => {
   const [sets, setSets] = useState(exercise.sets.length);
 
   function handleSets(value) {
@@ -20,12 +20,26 @@ const ManageExercise = ({ addExercise, exercise }) => {
     }
   }
 
+  function handleSetChange(setNumber, type, value) {
+    if(type === 'weight') {
+      exercise.sets[setNumber-1].weight = value
+    } else {
+      exercise.sets[setNumber-1].reps = value
+    }
+  }
+
+  function handleTitleChange(value) {
+    exercise.title = value;
+  }
+
+  
+  
   return (
     <View style={styles.outerContainer}>
       <View style={styles.exerciseContainer}>
         <View style={styles.titleContainer}>
-        <TextInput placeholder={exercise.title} style={styles.titleText} />
-        <IconButton icon="remove-circle" color={Colors.error500} size={32} />
+        <TextInput placeholder={exercise.title} onChangeText={(value) => handleTitleChange(value)} style={styles.titleText} />
+        <IconButton icon="remove-circle" color={Colors.error500} size={32} onPress={() => removeExercise(exercise.id)} />
         </View>
         <View style={styles.setsContainer}>
           <Text style={styles.text}># of Sets: </Text>
@@ -46,7 +60,7 @@ const ManageExercise = ({ addExercise, exercise }) => {
       </View>
       <FlatList
         data={exercise.sets}
-        renderItem={({ item }) => <Set set={item} edit={true} />}
+        renderItem={({ item }) => <Set set={item} edit={true} setChange={handleSetChange} />}
       />
     </View>
   );
@@ -56,7 +70,7 @@ export default ManageExercise;
 
 const styles = StyleSheet.create({
   outerContainer: {
-    marginTop: 16,
+    marginTop: 26,
   },
   exerciseContainer: {
     flexDirection: "row",

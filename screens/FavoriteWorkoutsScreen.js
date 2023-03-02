@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react';
 import Header from '../components/ui/Header';
 import { useSelector } from 'react-redux';
@@ -11,13 +11,14 @@ const FavoriteWorkoutsScreen = () => {
 
   //Filter all workouts to get an array of Favorites
   useEffect(() => {
-    setFavorites(workouts.filter((workout) => favWorkoutIds.includes(workout._id)))
+    setFavorites(workouts?.filter((workout) => favWorkoutIds.includes(workout._id)))
   }, []);
 
   return (
     <View style={styles.container}>
       <Header>Favorites</Header>
       <WorkoutList workouts={favorites} />
+      {!favorites && <Text>You don't have any favorites yet</Text>}
     </View>
   )
 }

@@ -2,10 +2,10 @@ import { StyleSheet, Text, TextInput, View } from "react-native";
 import React, { useState } from "react";
 import { Colors } from "../../constants/GlobalStyles";
 
-const Set = ({ set, edit = false }) => {
+const Set = ({ set, edit = false, setChange }) => {
   const [reps, setReps] = useState(set.reps);
   const [weight, setWeight] = useState(set.weight);
-  console.log(typeof set.reps);
+
   if (edit === true) {
     return (
       <View style={styles.container}>
@@ -16,6 +16,7 @@ const Set = ({ set, edit = false }) => {
             placeholder={reps}
             style={styles.textInput}
             keyboardType="number-pad"
+            onChangeText={(value) => setChange(set.number, 'reps', value)}
           />
         </View>
         <View style={styles.textInputContainer}>
@@ -24,6 +25,7 @@ const Set = ({ set, edit = false }) => {
             placeholder={weight}
             style={styles.textInput}
             keyboardType="number-pad"
+            onChangeText={(value) => setChange(set.number, 'weight', value)}
           />
           <Text style={styles.text}>lbs</Text>
         </View>
@@ -47,14 +49,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     backgroundColor: Colors.neutralGray500,
-    marginVertical: 3,
-    paddingVertical: 10,
+    marginVertical: 5,
+    paddingVertical: 14,
   },
   boldText: {
     fontWeight: "bold",
   },
   text: {
-    fontSize: 16,
+    fontSize: 18,
     paddingLeft: 5,
     color: Colors.neutral100,
   },
@@ -62,6 +64,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   textInput: {
-    fontSize: 16,
+    fontSize: 18,
   },
 });

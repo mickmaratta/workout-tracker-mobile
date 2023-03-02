@@ -15,7 +15,7 @@ const workouts = useSelector((state) => state.workouts.workouts)
   useEffect(() => {
     dispatch(workoutStart());
     try {
-      dispatch(getWorkoutsSuccess(DUMMY_DATA))
+      dispatch(getWorkoutsSuccess())
     } catch (error) {
       dispatch(workoutFailure)
     }

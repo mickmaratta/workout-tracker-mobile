@@ -7,3 +7,6 @@ export async function storeUser(user) {
   }
 
 // ADD WORKOUT
+export async function addWorkout(workout, workoutId, uid) {
+  const res = await axios.put(BACKEND_URL + `/users/${uid}/workouts/${workoutId}.json`, workout)
+}
