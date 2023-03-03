@@ -21,10 +21,12 @@ import LoadingOverlay from "../components/ui/LoadingOverlay";
 import { useDispatch } from "react-redux";
 import { addWorkoutSuccess } from "../redux/workoutsSlice";
 
-const ManageWorkoutScreen = ({ navigation }) => {
-  const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
-  const [exercises, setExercises] = useState([]);
+const ManageWorkoutScreen = ({ navigation, route }) => {
+  const { workout } = route ? route.params : false;
+  const [edit, setEdit] = useState(workout !== false);
+  const [title, setTitle] = useState(edit ? workout.title : "");
+  const [desc, setDesc] = useState(edit ? workout.desc : "");
+  const [exercises, setExercises] = useState(edit ? workout.exercises : []);
   const [isAdding, setIsAdding] = useState(false);
   const [err, setErr] = useState(false);
   const { currentUser } = useContext(AuthContext);
@@ -38,11 +40,11 @@ const ManageWorkoutScreen = ({ navigation }) => {
     };
     setExercises([...exercises, newExercise]);
   }
-  
+
   function removeExerciseHandler(id) {
     setExercises(exercises.filter((exercise) => exercise.id !== id));
   }
-  
+
   async function addWorkoutHandler(title, desc, exercises) {
     setIsAdding(true);
     const workoutToAdd = {
@@ -50,25 +52,29 @@ const ManageWorkoutScreen = ({ navigation }) => {
       createdAt: new Date().getTime(),
       title: title,
       desc: desc,
-      exercises: exercises
+      exercises: exercises,
     };
     try {
       await addWorkout(workoutToAdd, workoutToAdd._id, currentUser.uid);
       dispatch(addWorkoutSuccess(workoutToAdd));
-      navigation.navigate('Workouts');
-      setTitle('');
-      setDesc('');
-      setExercises([])
+      navigation.navigate("Workouts");
+      setTitle("");
+      setDesc("");
+      setExercises([]);
       setIsAdding(false);
     } catch (error) {
       setIsAdding(false);
       setErr(true);
-      console.log(error)
+      console.log(error);
     }
   }
 
-   //Loading Screen
-   if (isAdding) {
+  async function removeWorkout() {
+    //TO DOOOO
+  }
+  
+  //Loading Screen
+  if (isAdding) {
     return <LoadingOverlay message="Adding Workout..." />;
   }
 
@@ -79,14 +85,14 @@ const ManageWorkoutScreen = ({ navigation }) => {
         <View style={styles.inputsContainer}>
           <TextInput
             onChangeText={(text) => setTitle(text)}
-            placeholder="Workout title"
+            placeholder={edit ? workout.title : "Workout Title"}
             value={title}
             style={styles.titleText}
           />
           <TextInput
             onChangeText={(text) => setDesc(text)}
             multiline={true}
-            placeholder="Description"
+            placeholder={edit ? workout.desc : "Description"}
             value={desc}
             style={styles.text}
           />
@@ -117,7 +123,12 @@ const ManageWorkoutScreen = ({ navigation }) => {
         <View>
           <IconButton />
         </View>
-        <Button buttonStyle={styles.editButton} onPress={() => addWorkoutHandler(title, desc, exercises)}>Add Workout</Button>
+        <Button
+          buttonStyle={styles.editButton}
+          onPress={() => addWorkoutHandler(title, desc, exercises)}
+        >
+          {edit ? "Edit Workout" : "Add Workout"}
+        </Button>
       </ScrollView>
     </DismissKeyboard>
   );
@@ -145,6 +156,6 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   editButton: {
-    marginHorizontal: 20
+    marginHorizontal: 20,
   },
 });

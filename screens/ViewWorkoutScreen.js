@@ -39,6 +39,7 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
     }
   }
 
+
   //Loading Screen
   if (isDeleting) {
     return <LoadingOverlay message="Deleting Workout..." />;
@@ -73,7 +74,7 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <Button buttonStyle={styles.editButton}>Edit</Button>
+        <Button buttonStyle={styles.editButton} onPress={() => navigation.navigate("ManageWorkout", {workout})}>Edit</Button>
         <Button buttonStyle={styles.deleteButton} onPress={handleDelete}>Delete</Button>
       </View>
     </View>

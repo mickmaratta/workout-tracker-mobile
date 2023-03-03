@@ -120,11 +120,11 @@ function AuthenticatedStack() {
         headerShown: false,
       }}
       />
-      {/* <Stack.Screen name="AllWorkouts" component={AllWorkoutsScreen}
+      <Stack.Screen name="ManageWorkout" component={ManageWorkoutScreen}
       options={{
         headerShown: false,
       }}
-      /> */}
+      /> 
       <Stack.Screen name="ViewWorkout" component={ViewWorkoutScreen} />
       <Stack.Screen name="ManageExercise" component={ManageExerciseScreen} options={{presentation: "modal"}}/>
     </Stack.Navigator>
