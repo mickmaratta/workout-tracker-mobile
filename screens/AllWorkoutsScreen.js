@@ -3,14 +3,7 @@ import React, { useContext, useState } from "react";
 import { useEffect } from "react";
 import WorkoutList from "../components/Workouts/WorkoutList";
 import { useDispatch, useSelector } from "react-redux";
-import { DUMMY_DATA } from "../models/workout";
-import {
-  workoutStart,
-  workoutFailure,
-  getWorkoutsSuccess,
-  setWorkouts,
-  allWorkouts,
-} from "../redux/workoutsSlice";
+import { setWorkouts, allWorkouts } from "../redux/workoutsSlice";
 import Header from "../components/ui/Header";
 import { AuthContext } from "../context/AuthContext";
 import { fetchWorkouts } from "../util/http";
@@ -35,7 +28,7 @@ const AllWorkoutsScreen = () => {
         setErr(true);
       }
       setIsLoading(false);
-    };
+    }
     getWorkout();
   }, []);
 

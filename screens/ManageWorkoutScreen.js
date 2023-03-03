@@ -18,6 +18,8 @@ import Button from "../components/ui/Button";
 import { addWorkout } from "../util/http";
 import { AuthContext } from "../context/AuthContext";
 import LoadingOverlay from "../components/ui/LoadingOverlay";
+import { useDispatch } from "react-redux";
+import { addWorkoutSuccess } from "../redux/workoutsSlice";
 
 const ManageWorkoutScreen = ({ navigation }) => {
   const [title, setTitle] = useState("");
@@ -26,6 +28,7 @@ const ManageWorkoutScreen = ({ navigation }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [err, setErr] = useState(false);
   const { currentUser } = useContext(AuthContext);
+  const dispatch = useDispatch();
 
   function addNewExercise() {
     const newExercise = {
@@ -51,7 +54,11 @@ const ManageWorkoutScreen = ({ navigation }) => {
     };
     try {
       await addWorkout(workoutToAdd, workoutToAdd._id, currentUser.uid);
-      navigation.navigate('AllWorkouts');
+      dispatch(addWorkoutSuccess(workoutToAdd));
+      navigation.navigate('Workouts');
+      setTitle('');
+      setDesc('');
+      setExercises([])
       setIsAdding(false);
     } catch (error) {
       setIsAdding(false);

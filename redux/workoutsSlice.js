@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { sortWorkouts } from "../util/helpers";
 
 export const workoutsSlice = createSlice({
   name: "workout",
@@ -10,13 +11,13 @@ export const workoutsSlice = createSlice({
   reducers: {
     //SET WORKOUTS
     setWorkouts: (state, action) => {
-      state.workouts = action.payload;
+      const sortedWorkouts = sortWorkouts(action.payload, 'recent')
+      state.workouts = sortedWorkouts;
     },
 
     //ADD WORKOUT
-    addWorkoutsSuccess: (state, action) => {
-      state.isFetching = false;
-      state.workouts = [...state.workouts, action.payload];
+    addWorkoutSuccess: (state, action) => {
+      state.workouts = [action.payload, ...state.workouts];
     },
 
     //UPDATE WORKOUT
@@ -39,7 +40,7 @@ export const workoutsSlice = createSlice({
 
 export const {
   setWorkouts,
-  addWorkoutsSuccess,
+  addWorkoutSuccess,
   updateWorkoutSuccess,
   deleteWorkoutSuccess,
   completeWorkoutSuccess,
