@@ -65,8 +65,6 @@ const ManageWorkoutScreen = ({ navigation }) => {
     return <LoadingOverlay message="Adding Workout..." />;
   }
 
-  console.log(currentUser)
-
   return (
     <DismissKeyboard>
       <ScrollView>

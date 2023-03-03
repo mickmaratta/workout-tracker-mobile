@@ -3,10 +3,12 @@ import React, { useEffect, useState } from 'react';
 import Header from '../components/ui/Header';
 import { useSelector } from 'react-redux';
 import WorkoutList from '../components/Workouts/WorkoutList';
+import { allWorkouts } from '../redux/workoutsSlice';
+import { favWorkouts } from '../redux/favoritesSlice';
 
 const FavoriteWorkoutsScreen = () => {
-  const favWorkoutIds = useSelector(state => state.favorites.favorites);
-  const workouts = useSelector((state) => state.workouts.workouts);
+  const favWorkoutIds = useSelector(favWorkouts);
+  const workouts = useSelector(allWorkouts);
   const [favorites, setFavorites] = useState([]);
 
   //Filter all workouts to get an array of Favorites
@@ -14,11 +16,12 @@ const FavoriteWorkoutsScreen = () => {
     setFavorites(workouts?.filter((workout) => favWorkoutIds.includes(workout._id)))
   }, []);
 
+  console.log(favorites);
   return (
     <View style={styles.container}>
       <Header>Favorites</Header>
       <WorkoutList workouts={favorites} />
-      {!favorites && <Text>You don't have any favorites yet</Text>}
+      {favorites.length === 0 && <Text>You don't have any favorites yet</Text>}
     </View>
   )
 }

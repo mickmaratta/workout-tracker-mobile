@@ -8,17 +8,8 @@ export const workoutsSlice = createSlice({
     error: false,
   },
   reducers: {
-    workoutStart: (state) => {
-        state.isFetching = true;
-        state.error = false;
-      },
-      workoutFailure: (state) => {
-        state.isFetching = false;
-        state.error = true;
-      },
-    //GET ALL
-    getWorkoutsSuccess: (state, action) => {
-      state.isFetching = false;
+    //SET WORKOUTS
+    setWorkouts: (state, action) => {
       state.workouts = action.payload;
     },
 
@@ -46,15 +37,13 @@ export const workoutsSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const {
-  workoutStart,
-  workoutFailure,
-  getWorkoutsSuccess,
+  setWorkouts,
   addWorkoutsSuccess,
   updateWorkoutSuccess,
   deleteWorkoutSuccess,
   completeWorkoutSuccess,
 } = workoutsSlice.actions;
 
+export const allWorkouts = (state) => state.workouts.workouts;
 export default workoutsSlice.reducer;

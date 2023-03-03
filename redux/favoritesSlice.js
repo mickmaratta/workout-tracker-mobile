@@ -44,5 +44,5 @@ export const {
   addFavoriteSuccess,
   removeFavoriteSuccess,
 } = favoritesSlice.actions;
-
+export const favWorkouts = (state) => state.favorites.favorites;
 export default favoritesSlice.reducer;
