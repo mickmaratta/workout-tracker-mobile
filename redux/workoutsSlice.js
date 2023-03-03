@@ -28,11 +28,11 @@ export const workoutsSlice = createSlice({
       );
       state.workouts[index] = action.payload;
     },
+
     //DELETE WORKOUT
     deleteWorkoutSuccess: (state, action) => {
-      state.isFetching = false;
       state.workouts = state.workouts.filter(
-        (workout) => workout._id !== action.payload._id
+        (workout) => workout._id !== action.payload
       );
     },
   },

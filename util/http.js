@@ -30,3 +30,8 @@ export async function fetchWorkouts(uid) {
   }
   return workouts;
 }
+
+//DELETE WORKOUT
+export async function deleteWorkout(workoutId, uid) {
+  return await axios.delete(BACKEND_URL + `/users/${uid}/workouts/${workoutId}.json`)
+}
