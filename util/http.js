@@ -6,16 +6,9 @@ export async function storeUser(user) {
   const res = await axios.put(BACKEND_URL + `/users/${user.uid}.json`, user);
 }
 
-// ADD WORKOUT
-export async function addWorkout(workout, workoutId, uid) {
-  const res = await axios.put(
-    BACKEND_URL + `/users/${uid}/workouts/${workoutId}.json`,
-    workout
-  );
-}
 
 //FETCH WORKOUTS
-export async function fetchWorkouts(uid) {
+export async function fetchDatabaseWorkouts(uid) {
   const res = await axios.get(BACKEND_URL + `/users/${uid}/workouts.json`);
   const workouts = [];
   for (const key in res.data) {
@@ -31,7 +24,20 @@ export async function fetchWorkouts(uid) {
   return workouts;
 }
 
+// ADD WORKOUT
+export async function addDatabaseWorkout(workout, workoutId, uid) {
+  const res = await axios.put(
+    BACKEND_URL + `/users/${uid}/workouts/${workoutId}.json`,
+    workout
+  );
+}
+
+//UPDATE WORKOUT
+export async function updateDatabaseWorkout(workout, workoutId, uid) {
+  return await axios.put(BACKEND_URL + `/users/${uid}/workouts/${workoutId}.json`, workout)
+}
+
 //DELETE WORKOUT
-export async function deleteWorkout(workoutId, uid) {
+export async function deleteDatabaseWorkout(workoutId, uid) {
   return await axios.delete(BACKEND_URL + `/users/${uid}/workouts/${workoutId}.json`)
 }

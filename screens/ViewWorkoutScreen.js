@@ -7,10 +7,10 @@ import Set from "../components/Workouts/Set";
 import Header from "../components/ui/Header";
 import Button from "../components/ui/Button";
 import LoadingOverlay from "../components/ui/LoadingOverlay";
-import { deleteWorkout } from "../util/http";
+import { deleteDatabaseWorkout } from "../util/http";
 import { AuthContext } from "../context/AuthContext";
 import { useDispatch } from "react-redux";
-import { deleteWorkoutSuccess } from "../redux/workoutsSlice";
+import { deleteReduxWorkout } from "../redux/workoutsSlice";
 
 const ViewWorkoutScreen = ({ route, navigation }) => {
   const { workout } = route.params;
@@ -31,11 +31,10 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
   async function handleDelete() {
     setIsDeleting(true);
     try {
-      await deleteWorkout(workout._id, currentUser.uid);
-      dispatch(deleteWorkoutSuccess(workout._id))
+      await deleteDatabaseWorkout(workout._id, currentUser.uid);
+      dispatch(deleteReduxWorkout(workout._id))
       navigation.navigate('Workouts');
     } catch (error) {
-      console.log(error)
     }
   }
 

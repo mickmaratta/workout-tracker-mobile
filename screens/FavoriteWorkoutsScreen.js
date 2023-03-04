@@ -16,7 +16,6 @@ const FavoriteWorkoutsScreen = () => {
     setFavorites(workouts?.filter((workout) => favWorkoutIds.includes(workout._id)))
   }, []);
 
-  console.log(favorites);
   return (
     <View style={styles.container}>
       <Header>Favorites</Header>

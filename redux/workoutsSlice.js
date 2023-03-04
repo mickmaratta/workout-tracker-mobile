@@ -5,8 +5,6 @@ export const workoutsSlice = createSlice({
   name: "workout",
   initialState: {
     workouts: [],
-    isFetching: false,
-    error: false,
   },
   reducers: {
     //SET WORKOUTS
@@ -16,13 +14,12 @@ export const workoutsSlice = createSlice({
     },
 
     //ADD WORKOUT
-    addWorkoutSuccess: (state, action) => {
+    addReduxWorkout: (state, action) => {
       state.workouts = [action.payload, ...state.workouts];
     },
 
     //UPDATE WORKOUT
-    updateWorkoutSuccess: (state, action) => {
-      state.isFetching = false;
+    updateReduxWorkout: (state, action) => {
       const index = state.workouts.findIndex(
         (workout) => workout._id === action.payload._id
       );
@@ -30,7 +27,7 @@ export const workoutsSlice = createSlice({
     },
 
     //DELETE WORKOUT
-    deleteWorkoutSuccess: (state, action) => {
+    deleteReduxWorkout: (state, action) => {
       state.workouts = state.workouts.filter(
         (workout) => workout._id !== action.payload
       );
@@ -40,9 +37,9 @@ export const workoutsSlice = createSlice({
 
 export const {
   setWorkouts,
-  addWorkoutSuccess,
-  updateWorkoutSuccess,
-  deleteWorkoutSuccess,
+  addReduxWorkout,
+  updateReduxWorkout,
+  deleteReduxWorkout,
   completeWorkoutSuccess,
 } = workoutsSlice.actions;
 

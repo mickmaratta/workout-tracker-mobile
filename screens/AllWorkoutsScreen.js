@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setWorkouts, allWorkouts } from "../redux/workoutsSlice";
 import Header from "../components/ui/Header";
 import { AuthContext } from "../context/AuthContext";
-import { fetchWorkouts } from "../util/http";
+import { fetchDatabaseWorkouts } from "../util/http";
 import LoadingOverlay from "../components/ui/LoadingOverlay";
 
 const AllWorkoutsScreen = () => {
@@ -21,7 +21,7 @@ const AllWorkoutsScreen = () => {
     async function getWorkout() {
       setIsLoading(true);
       try {
-        const fetchedWorkouts = await fetchWorkouts(currentUser.uid);
+        const fetchedWorkouts = await fetchDatabaseWorkouts(currentUser.uid);
         dispatch(setWorkouts(fetchedWorkouts));
         setIsLoading(false);
       } catch (error) {

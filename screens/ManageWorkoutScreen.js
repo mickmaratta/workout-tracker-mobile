@@ -1,4 +1,5 @@
 import {
+  Alert,
   FlatList,
   Pressable,
   ScrollView,
@@ -15,15 +16,15 @@ import IconButton from "../components/ui/IconButton";
 import ManageExercise from "../components/Workouts/ManageExercise";
 import { v4 as uuid } from "uuid";
 import Button from "../components/ui/Button";
-import { addWorkout } from "../util/http";
+import { addDatabaseWorkout, updateDatabaseWorkout } from "../util/http";
 import { AuthContext } from "../context/AuthContext";
 import LoadingOverlay from "../components/ui/LoadingOverlay";
 import { useDispatch } from "react-redux";
-import { addWorkoutSuccess } from "../redux/workoutsSlice";
+import { addReduxWorkout, updateReduxWorkout } from "../redux/workoutsSlice";
 
 const ManageWorkoutScreen = ({ navigation, route }) => {
-  const { workout } = route ? route.params : false;
-  const [edit, setEdit] = useState(workout !== false);
+  const  workout  = route.params?.workout
+  const [edit, setEdit] = useState(!!route.params);
   const [title, setTitle] = useState(edit ? workout.title : "");
   const [desc, setDesc] = useState(edit ? workout.desc : "");
   const [exercises, setExercises] = useState(edit ? workout.exercises : []);
@@ -55,8 +56,8 @@ const ManageWorkoutScreen = ({ navigation, route }) => {
       exercises: exercises,
     };
     try {
-      await addWorkout(workoutToAdd, workoutToAdd._id, currentUser.uid);
-      dispatch(addWorkoutSuccess(workoutToAdd));
+      await addDatabaseWorkout(workoutToAdd, workoutToAdd._id, currentUser.uid);
+      dispatch(addReduxWorkout(workoutToAdd));
       navigation.navigate("Workouts");
       setTitle("");
       setDesc("");
@@ -65,14 +66,38 @@ const ManageWorkoutScreen = ({ navigation, route }) => {
     } catch (error) {
       setIsAdding(false);
       setErr(true);
-      console.log(error);
     }
   }
 
-  async function removeWorkout() {
-    //TO DOOOO
+  async function updateWorkoutHandler(title, desc, exercises) {
+    setIsAdding(true);
+    const workoutToUpdate = {
+      _id: workout._id,
+      createdAt: workout.createdAt,
+      updatedAt: new Date().getTime(),
+      title: title,
+      desc: desc,
+      exercises: exercises
+    }
+    try {
+      await updateDatabaseWorkout(workoutToUpdate, workout._id, currentUser.uid);
+      dispatch(updateReduxWorkout(workoutToUpdate));
+      navigation.navigate("Workouts");
+    } catch (error) {
+      setIsAdding(false);
+      setErr(true);
+    }
   }
-  
+
+  function cancelHandler() {
+    Alert.alert('Unsaved changes', 'All unsaved changes will be lost.', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {text: 'OK', onPress: () => navigation.navigate('Workouts')},
+    ]);
+  }
   //Loading Screen
   if (isAdding) {
     return <LoadingOverlay message="Adding Workout..." />;
@@ -81,7 +106,7 @@ const ManageWorkoutScreen = ({ navigation, route }) => {
   return (
     <DismissKeyboard>
       <ScrollView>
-        <Header>Add Workout</Header>
+        <Header back={edit}>{edit ? 'Edit Workout' : 'Add Workout'}</Header>
         <View style={styles.inputsContainer}>
           <TextInput
             onChangeText={(text) => setTitle(text)}
@@ -123,12 +148,15 @@ const ManageWorkoutScreen = ({ navigation, route }) => {
         <View>
           <IconButton />
         </View>
-        <Button
-          buttonStyle={styles.editButton}
-          onPress={() => addWorkoutHandler(title, desc, exercises)}
-        >
-          {edit ? "Edit Workout" : "Add Workout"}
-        </Button>
+        <View style={styles.buttonContainer}>
+          <Button
+            buttonStyle={styles.button}
+            onPress={() => edit ? updateWorkoutHandler(title, desc, exercises) : addWorkoutHandler(title, desc, exercises)}
+          >
+            {edit ? "Save Changes" : "Add Workout"}
+          </Button>
+          {edit && <Button buttonStyle={[styles.button, styles.cancelButton]} onPress={cancelHandler}>Cancel</Button>}
+        </View>
       </ScrollView>
     </DismissKeyboard>
   );
@@ -140,6 +168,7 @@ const styles = StyleSheet.create({
   inputsContainer: {},
   titleText: {
     fontSize: 32,
+    marginTop: 30,
     marginBottom: 10,
     paddingLeft: 12,
   },
@@ -155,7 +184,15 @@ const styles = StyleSheet.create({
   pressed: {
     opacity: 0.5,
   },
-  editButton: {
-    marginHorizontal: 20,
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
   },
+  button: {
+    width: "40%",
+    marginHorizontal: 10,
+  },
+  cancelButton: {
+    backgroundColor: Colors.error500,
+  }
 });
