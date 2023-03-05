@@ -6,8 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { setWorkouts, allWorkouts } from "../redux/workoutsSlice";
 import Header from "../components/ui/Header";
 import { AuthContext } from "../context/AuthContext";
-import { fetchDatabaseWorkouts } from "../util/http";
+import { fetchDatabaseFavorites, fetchDatabaseWorkouts } from "../util/http";
 import LoadingOverlay from "../components/ui/LoadingOverlay";
+import { setFavorites } from "../redux/favoritesSlice";
 
 const AllWorkoutsScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -16,13 +17,15 @@ const AllWorkoutsScreen = () => {
   const dispatch = useDispatch();
   const workouts = useSelector(allWorkouts);
 
-  // Get all workouts from Firebase Database and save them to Redux
+  // Get all workouts + favorites from Firebase Database and save them to Redux
   useEffect(() => {
     async function getWorkout() {
       setIsLoading(true);
       try {
         const fetchedWorkouts = await fetchDatabaseWorkouts(currentUser.uid);
+        const fetchedFavWorkouts = await fetchDatabaseFavorites(currentUser.uid)
         dispatch(setWorkouts(fetchedWorkouts));
+        dispatch(setFavorites(fetchedFavWorkouts));
         setIsLoading(false);
       } catch (error) {
         setErr(true);
@@ -39,7 +42,7 @@ const AllWorkoutsScreen = () => {
 
   return (
     <View>
-      <Header>All Workouts</Header>
+      <Header logout={true}>All Workouts</Header>
       <WorkoutList workouts={workouts} />
     </View>
   );

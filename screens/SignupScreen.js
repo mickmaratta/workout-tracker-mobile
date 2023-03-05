@@ -27,7 +27,7 @@ const SignupScreen = () => {
         email,
         createdAt: new Date().getTime(),
         workouts: [],
-        favoriteWorkouts: [],
+        favWorkouts: [],
       })
     } catch (error) {
       setErr(true);

@@ -7,19 +7,20 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import { useNavigation } from "@react-navigation/native";
 
-const Header = ({ children, back = false }) => {
+const Header = ({ children, back, logout, favorite }) => {
   const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
       <Title>{children}</Title>
-      {!back && <IconButton
+      {logout && <IconButton
         onPress={() => signOut(auth)}
-        style={styles.logoutIcon}
+        style={styles.rightIcon}
         icon="log-out-outline"
         size={28}
         color={Colors.secondary300}
       />}
+      
       {back && <Pressable onPress={() => navigation.goBack()} style={styles.backIconContainer}>
         <IconButton
           style={styles.backIcon}
@@ -40,10 +41,11 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.neutral800,
     marginTop: 54,
     paddingBottom: 10,
+    marginBottom: 20,
     alignItems: "center",
     justifyContent: "center",
   },
-  logoutIcon: {
+  rightIcon: {
     position: "absolute",
     right: 10,
   },

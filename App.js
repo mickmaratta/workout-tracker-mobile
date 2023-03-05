@@ -19,7 +19,6 @@ import ManageWorkoutScreen from "./screens/ManageWorkoutScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import ViewWorkoutScreen from "./screens/ViewWorkoutScreen";
 import IconButton from "./components/ui/IconButton";
-import ManageExerciseScreen from "./screens/ManageExerciseScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -126,7 +125,6 @@ function AuthenticatedStack() {
       }}
       /> 
       <Stack.Screen name="ViewWorkout" component={ViewWorkoutScreen} />
-      <Stack.Screen name="ManageExercise" component={ManageExerciseScreen} options={{presentation: "modal"}}/>
     </Stack.Navigator>
   );
 }

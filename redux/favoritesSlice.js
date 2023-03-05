@@ -3,46 +3,30 @@ import { createSlice } from "@reduxjs/toolkit";
 export const favoritesSlice = createSlice({
   name: "favorite",
   initialState: {
-    favorites: ["e1"],
-    isFetching: false,
-    error: false,
+    favorites: [],
   },
   reducers: {
-    favoriteStart: (state) => {
-      state.isFetching = true;
-      state.error = false;
-    },
-    favoriteFailure: (state) => {
-      state.isFetching = false;
-      state.error = true;
-    },
-    //GET ALL
-    getFavoritesSuccess: (state, action) => {
-      state.isFetching = false;
+    //SET FAVORITES
+    setFavorites: (state, action) => {
       state.favorites = action.payload;
     },
-
     //ADD FAVORITE
-    addFavoriteSuccess: (state, action) => {
-      state.isFetching = false;
+    addReduxFavorite: (state, action) => {
       state.favorites = [...state.favorites, action.payload];
     },
 
-    //REMOVE FAVORITE
-    removeFavoriteSuccess: (state, action) => {
-      state.isFetching = false;
-      state.favorites = state.favorites.filter(favoriteWorkout => favoriteWorkout._id !== action.payload._id)
+    //DELETE FAVORITE
+    deleteReduxFavorite: (state, action) => {
+      state.favorites = state.favorites.filter(favId => favId !== action.payload)
     },
   },
 });
 
 // Action creators are generated for each case reducer function
 export const {
-  favoriteStart,
-  favoriteFailure,
-  getFavoritesSuccess,
-  addFavoriteSuccess,
-  removeFavoriteSuccess,
+  setFavorites,
+  addReduxFavorite,
+  deleteReduxFavorite,
 } = favoritesSlice.actions;
-export const favWorkouts = (state) => state.favorites.favorites;
+export const allFavWorkouts = (state) => state.favorites.favorites;
 export default favoritesSlice.reducer;

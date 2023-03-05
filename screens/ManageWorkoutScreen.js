@@ -100,7 +100,8 @@ const ManageWorkoutScreen = ({ navigation, route }) => {
   }
   //Loading Screen
   if (isAdding) {
-    return <LoadingOverlay message="Adding Workout..." />;
+    const message = edit ? "Updating Workout..." : "Adding Workout...";
+    return <LoadingOverlay message={message} />;
   }
 
   return (
@@ -168,7 +169,6 @@ const styles = StyleSheet.create({
   inputsContainer: {},
   titleText: {
     fontSize: 32,
-    marginTop: 30,
     marginBottom: 10,
     paddingLeft: 12,
   },
