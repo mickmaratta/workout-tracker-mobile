@@ -44,13 +44,17 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
   }
 
   function handleDeleteAlert() {
-    Alert.alert('Delete Workout', 'Are you sure you want to delete this workout?', [
-      {
-        text: 'Cancel',
-        style: 'cancel',
-      },
-      {text: 'OK', onPress: () => handleDelete()},
-    ]);
+    Alert.alert(
+      "Delete Workout",
+      "Are you sure you want to delete this workout?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        { text: "OK", onPress: () => handleDelete() },
+      ]
+    );
   }
   async function handleDelete() {
     setIsDeleting(true);
@@ -58,7 +62,7 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
       await deleteDatabaseWorkout(workout._id, currentUser.uid);
       await deleteDatabaseFavorite(workout._id, currentUser.uid);
       dispatch(deleteReduxWorkout(workout._id));
-      dispatch(deleteReduxFavorite(workout._id))
+      dispatch(deleteReduxFavorite(workout._id));
       navigation.navigate("Workouts");
     } catch (error) {}
   }
@@ -124,15 +128,23 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
         </View>
       </View>
       <View style={styles.buttonContainer}>
+        <Button buttonStyle={styles.deleteButton} onPress={handleDeleteAlert}>
+          Delete
+        </Button>
+        <Button
+          buttonStyle={styles.trackButton}
+          textStyle={styles.trackButtonText}
+          onPress={() => {
+            navigation.navigate("TrackWorkouts", { workout });
+          }}
+        >
+          Track
+        </Button>
         <Button
           buttonStyle={styles.editButton}
           onPress={() => navigation.navigate("ManageWorkout", { workout })}
         >
           Edit
-        </Button>
-        <Button buttonStyle={styles.trackButton} textStyle={styles.trackButtonText}>Track</Button>
-        <Button buttonStyle={styles.deleteButton} onPress={handleDeleteAlert}>
-          Delete
         </Button>
       </View>
     </View>
@@ -169,7 +181,7 @@ const styles = StyleSheet.create({
   },
   trackButton: {
     width: "30%",
-    backgroundColor: Colors.primary300
+    backgroundColor: Colors.primary300,
   },
   trackButtonText: {
     paddingVertical: 10,

@@ -4,13 +4,10 @@ export const completedWorkoutsSlice = createSlice({
   name: "completedWorkouts",
   initialState: {
     completedWorkouts: [],
-    isFetching: false,
-    error: false,
   },
-  reducers: {
-    
+  reducers: {  
     //COMPLETE WORKOUT
-    completeWorkoutSuccess: (state, action) => {
+    completeReduxWorkout: (state, action) => {
       state.isFetching = false;
       state.completedWorkouts = [...state.completedWorkouts, action.payload];
     },
@@ -18,13 +15,7 @@ export const completedWorkoutsSlice = createSlice({
 });
 
 export const {
-  workoutStart,
-  workoutFailure,
-  getWorkoutsSuccess,
-  addWorkoutsSuccess,
-  updateWorkoutSuccess,
-  deleteWorkoutSuccess,
-  completeWorkoutSuccess,
+  completeReduxWorkout,
 } = completedWorkoutsSlice.actions;
 
 export default completedWorkoutsSlice.reducer;

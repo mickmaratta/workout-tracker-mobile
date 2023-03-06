@@ -21,10 +21,10 @@ const ManageExercise = ({ removeExercise, exercise }) => {
   }
 
   function handleSetChange(setNumber, type, value) {
-    if(type === 'weight') {
-      exercise.sets[setNumber-1].weight = value
+    if (type === "weight") {
+      exercise.sets[setNumber - 1].weight = value;
     } else {
-      exercise.sets[setNumber-1].reps = value
+      exercise.sets[setNumber - 1].reps = value;
     }
   }
 
@@ -32,35 +32,46 @@ const ManageExercise = ({ removeExercise, exercise }) => {
     exercise.title = value;
   }
 
-  
-  
   return (
     <View style={styles.outerContainer}>
       <View style={styles.exerciseContainer}>
-        <View style={styles.titleContainer}>
-        <TextInput placeholder={exercise.title} onChangeText={(value) => handleTitleChange(value)} style={styles.titleText} />
-        <IconButton icon="remove-circle" color={Colors.error500} size={32} onPress={() => removeExercise(exercise.id)} />
-        </View>
-        <View style={styles.setsContainer}>
-          <Text style={styles.text}># of Sets: </Text>
-          <IconButton
-            onPress={() => handleSets("minus")}
-            icon="remove-circle"
-            size={32}
-            color={sets === 1 ? Colors.neutralGray500 : Colors.neutralGray300}
-          />
-          <Text style={styles.text}>{sets}</Text>
-          <IconButton
-            onPress={() => handleSets("add")}
-            icon="add-circle"
-            size={32}
-            color={Colors.neutralGray300}
-          />
+        <View style={styles.titleOuterContainer}>
+          <View style={styles.titleInnerContainer}>
+            <TextInput
+              placeholder={exercise.title}
+              onChangeText={(value) => handleTitleChange(value)}
+              style={styles.titleText}
+            />
+            <IconButton
+              icon="remove-circle"
+              color={Colors.error500}
+              size={32}
+              onPress={() => removeExercise(exercise.id)}
+            />
+          </View>
+          <View style={styles.setsContainer}>
+            <Text style={styles.text}># of Sets: </Text>
+            <IconButton
+              onPress={() => handleSets("minus")}
+              icon="remove-circle"
+              size={32}
+              color={sets === 1 ? Colors.neutralGray500 : Colors.neutralGray300}
+            />
+            <Text style={styles.text}>{sets}</Text>
+            <IconButton
+              onPress={() => handleSets("add")}
+              icon="add-circle"
+              size={32}
+              color={Colors.neutralGray300}
+            />
+          </View>
         </View>
       </View>
       <FlatList
         data={exercise.sets}
-        renderItem={({ item }) => <Set set={item} edit={true} setChange={handleSetChange} />}
+        renderItem={({ item }) => (
+          <Set set={item} edit={true} setChange={handleSetChange} />
+        )}
       />
     </View>
   );
@@ -69,16 +80,22 @@ const ManageExercise = ({ removeExercise, exercise }) => {
 export default ManageExercise;
 
 const styles = StyleSheet.create({
-  outerContainer: {
-    marginTop: 26,
-  },
   exerciseContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
   },
-  titleContainer: {
-    flexDirection:"row"
+  titleOuterContainer: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 15,
+    marginTop: 25,
+  },
+  titleInnerContainer: {
+    flexDirection: "row",
+    alignItems: "center"
   },
   setsContainer: {
     flexDirection: "row",

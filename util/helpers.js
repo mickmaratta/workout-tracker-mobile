@@ -19,3 +19,13 @@ export function sortWorkouts(workouts, direction) {
   }
   return workouts
 }
+
+//FORMAT WORKOUT DURATION
+export function formatWorkoutDuration(time) {
+  const minutes = (time/60).toFixed();
+  const displayedSeconds = time%60
+  const formattedMinutes = (minutes<10 ? `0${minutes}` : minutes)
+  const formattedSeconds = (displayedSeconds <10 ? `0${displayedSeconds}` : displayedSeconds)
+  const formattedTime = `${formattedMinutes}:${formattedSeconds}`
+  return formattedTime
+};

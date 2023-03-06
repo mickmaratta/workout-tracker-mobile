@@ -15,7 +15,7 @@ export default IconButton;
 const styles = StyleSheet.create({
   buttonContainer: {
     marginHorizontal: 10,
-    marginVertical: 5,
+    marginVertical: 0,
     justifyContent: "center",
     alignItems: "center",
   },

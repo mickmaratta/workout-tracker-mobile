@@ -59,7 +59,7 @@ export async function fetchDatabaseFavorites(uid) {
 
 //ADD FAVORITE
 export async function addDatabaseFavorite(workoutId, uid, favToAdd) {
-  const res = await axios.put(
+  await axios.put(
     BACKEND_URL + `/users/${uid}/favWorkouts/${workoutId}.json`,
     favToAdd
   );
@@ -69,5 +69,17 @@ export async function addDatabaseFavorite(workoutId, uid, favToAdd) {
 export async function deleteDatabaseFavorite(workoutId, uid) {
   return await axios.delete(
     BACKEND_URL + `/users/${uid}/favWorkouts/${workoutId}.json`
+  );
+}
+
+//COMPLETE WORKOUT
+export async function completeDatabaseWorkout(
+  uid,
+  completedWorkoutId,
+  completedWorkout
+) {
+  await axios.put(
+    BACKEND_URL + `/users/${uid}/completedWorkouts/${completedWorkoutId}.json`,
+    completedWorkout
   );
 }
