@@ -23,7 +23,7 @@ const FavoriteWorkoutsScreen = () => {
       <Header logout={true}>Favorites</Header>
       <WorkoutList workouts={favorites} />
       {favorites.length === 0 && (
-        <View style={styles.innterContainer}>
+        <View style={styles.innerContainer}>
           <Text style={styles.text}>You don't have any favorites yet</Text>
         </View>
       )}

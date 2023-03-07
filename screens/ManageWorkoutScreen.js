@@ -8,7 +8,7 @@ import {
   TextInput,
   View,
 } from "react-native";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "../components/ui/Header";
 import { Colors } from "../constants/GlobalStyles";
 import { DismissKeyboard } from "../util/helpers";
@@ -23,13 +23,16 @@ import { useDispatch } from "react-redux";
 import { addReduxWorkout, updateReduxWorkout } from "../redux/workoutsSlice";
 
 const ManageWorkoutScreen = ({ navigation, route }) => {
-  const  workout  = route.params?.workout
+  const workout = route.params?.workout;
   const [edit, setEdit] = useState(!!route.params);
   const [title, setTitle] = useState(edit ? workout.title : "");
   const [desc, setDesc] = useState(edit ? workout.desc : "");
   const [exercises, setExercises] = useState(edit ? workout.exercises : []);
   const [isAdding, setIsAdding] = useState(false);
-  const [err, setErr] = useState(false);
+  const [err, setErr] = useState({
+    title: false,
+    exercises: false,
+  });
   const { currentUser } = useContext(AuthContext);
   const dispatch = useDispatch();
 
@@ -55,6 +58,16 @@ const ManageWorkoutScreen = ({ navigation, route }) => {
       desc: desc,
       exercises: exercises,
     };
+
+    //VALIDATE INPUTS
+    const titleIsValid = title.trim().length > 0;
+    const exercisesIsValid = exercises.length > 0;
+    if (!titleIsValid || !exercisesIsValid) {
+      setErr({ exercises: !exercisesIsValid, title: !titleIsValid });
+      setIsAdding(false);
+      return;
+    }
+
     try {
       await addDatabaseWorkout(workoutToAdd, workoutToAdd._id, currentUser.uid);
       dispatch(addReduxWorkout(workoutToAdd));
@@ -77,10 +90,14 @@ const ManageWorkoutScreen = ({ navigation, route }) => {
       updatedAt: new Date().getTime(),
       title: title,
       desc: desc,
-      exercises: exercises
-    }
+      exercises: exercises,
+    };
     try {
-      await updateDatabaseWorkout(workoutToUpdate, workout._id, currentUser.uid);
+      await updateDatabaseWorkout(
+        workoutToUpdate,
+        workout._id,
+        currentUser.uid
+      );
       dispatch(updateReduxWorkout(workoutToUpdate));
       navigation.navigate("Workouts");
     } catch (error) {
@@ -90,12 +107,12 @@ const ManageWorkoutScreen = ({ navigation, route }) => {
   }
 
   function cancelHandler() {
-    Alert.alert('Unsaved changes', 'All unsaved changes will be lost.', [
+    Alert.alert("Unsaved changes", "All unsaved changes will be lost.", [
       {
-        text: 'Cancel',
-        style: 'cancel',
+        text: "Cancel",
+        style: "cancel",
       },
-      {text: 'OK', onPress: () => navigation.navigate('Workouts')},
+      { text: "OK", onPress: () => navigation.navigate("Workouts") },
     ]);
   }
   //Loading Screen
@@ -107,11 +124,13 @@ const ManageWorkoutScreen = ({ navigation, route }) => {
   return (
     <DismissKeyboard>
       <ScrollView>
-        <Header back={edit}>{edit ? 'Edit Workout' : 'Add Workout'}</Header>
+        <Header back={edit}>{edit ? "Edit Workout" : "Add Workout"}</Header>
         <View style={styles.inputsContainer}>
           <TextInput
             onChangeText={(text) => setTitle(text)}
             placeholder={edit ? workout.title : "Workout Title"}
+            placeholderTextColor={err.title ? Colors.error700 : Colors.neutralGray300}
+
             value={title}
             style={styles.titleText}
           />
@@ -141,7 +160,7 @@ const ManageWorkoutScreen = ({ navigation, route }) => {
             ]}
             onPress={() => addNewExercise()}
           >
-            <Text style={styles.text}>Add Exercise</Text>
+            <Text style={[styles.text, err.exercises && styles.errorText]}>Add Exercise</Text>
             <IconButton icon="add-circle" size={28} color={Colors.primary500} />
           </Pressable>
         </View>
@@ -152,11 +171,22 @@ const ManageWorkoutScreen = ({ navigation, route }) => {
         <View style={styles.buttonContainer}>
           <Button
             buttonStyle={styles.button}
-            onPress={() => edit ? updateWorkoutHandler(title, desc, exercises) : addWorkoutHandler(title, desc, exercises)}
+            onPress={() =>
+              edit
+                ? updateWorkoutHandler(title, desc, exercises)
+                : addWorkoutHandler(title, desc, exercises)
+            }
           >
             {edit ? "Save Changes" : "Add Workout"}
           </Button>
-          {edit && <Button buttonStyle={[styles.button, styles.cancelButton]} onPress={cancelHandler}>Cancel</Button>}
+          {edit && (
+            <Button
+              buttonStyle={[styles.button, styles.cancelButton]}
+              onPress={cancelHandler}
+            >
+              Cancel
+            </Button>
+          )}
         </View>
       </ScrollView>
     </DismissKeyboard>
@@ -176,6 +206,9 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     fontSize: 20,
   },
+  errorText: {
+    color: Colors.error700,
+  },
   addContainer: {
     marginVertical: 20,
     flexDirection: "row",
@@ -194,5 +227,5 @@ const styles = StyleSheet.create({
   },
   cancelButton: {
     backgroundColor: Colors.error500,
-  }
+  },
 });
