@@ -3,10 +3,15 @@ import React, { useState } from "react";
 import { Colors } from "../../constants/GlobalStyles";
 import IconButton from "../ui/IconButton";
 
-const Set = ({ set, edit, setChange, trackWorkout }) => {
+const Set = ({ set, edit, setChange, trackWorkout, handleCompletedSets }) => {
   const [reps, setReps] = useState(set.reps);
   const [weight, setWeight] = useState(set.weight);
   const [completedSet, setCompletedSet] = useState(false)
+
+  function completedSetHandler() {
+    setCompletedSet(!completedSet);
+    handleCompletedSets(completedSet);
+  };
 
   if (edit === true) {
     return (
@@ -45,7 +50,7 @@ const Set = ({ set, edit, setChange, trackWorkout }) => {
         color={Colors.success300}
         size={32}
         style={styles.iconButton}
-        onPress={() => setCompletedSet(!completedSet)}
+        onPress={completedSetHandler}
       />}
     </View>
   );

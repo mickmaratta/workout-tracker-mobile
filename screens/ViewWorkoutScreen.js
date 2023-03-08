@@ -99,9 +99,9 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
       <IconButton
         onPress={handleFavorite}
         style={styles.favIcon}
-        icon={isFavorite ? "heart" : "heart-outline"}
+        icon={isFavorite ? "star" : "star-outline"}
         size={32}
-        color={Colors.error700}
+        color={Colors.secondary300}
       />
       <SwitchSelector
         left="Collapsed"
@@ -181,10 +181,13 @@ const styles = StyleSheet.create({
   },
   trackButton: {
     width: "30%",
-    backgroundColor: Colors.primary300,
+    backgroundColor: Colors.primary500,
   },
   trackButtonText: {
-    paddingVertical: 10,
+    paddingVertical: 6,
+    color: Colors.secondary300,
+    fontWeight: "bold",
+    fontSize: 20,
   },
   deleteButton: {
     backgroundColor: Colors.error500,
@@ -193,6 +196,6 @@ const styles = StyleSheet.create({
   favIcon: {
     position: "absolute",
     right: 15,
-    top: 60,
+    top: 80,
   },
 });

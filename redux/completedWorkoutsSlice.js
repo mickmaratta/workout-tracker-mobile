@@ -6,6 +6,10 @@ export const completedWorkoutsSlice = createSlice({
     completedWorkouts: [],
   },
   reducers: {  
+    //SET COMPLETED WORKOUTS
+    setCompletedWorkouts: (state, action) => {
+      state.completedWorkouts = action.payload
+    },
     //COMPLETE WORKOUT
     completeReduxWorkout: (state, action) => {
       state.isFetching = false;
@@ -15,7 +19,9 @@ export const completedWorkoutsSlice = createSlice({
 });
 
 export const {
+  setCompletedWorkouts,
   completeReduxWorkout,
 } = completedWorkoutsSlice.actions;
 
+export const allCompletedWorkouts = (state) => state.completedWorkouts.completedWorkouts;
 export default completedWorkoutsSlice.reducer;

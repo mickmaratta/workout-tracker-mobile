@@ -5,7 +5,7 @@ import { Colors } from "../../constants/GlobalStyles";
 const SmallWidget = () => {
   return (
     <View style={styles.container}>
-      <Text>SmallWidget</Text>
+      <Text>Small</Text>
     </View>
   );
 };

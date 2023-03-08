@@ -29,3 +29,20 @@ export function formatWorkoutDuration(time) {
   const formattedTime = `${formattedMinutes}:${formattedSeconds}`
   return formattedTime
 };
+
+//CALCULATE TOTAL NUMBER OF SETS IN A WORKOUT
+export function calcNumOfSets(exercises) {
+  let numOfSets = 0;
+  exercises.map(exercise => {
+    numOfSets = numOfSets + exercise.sets.length
+  })
+  return numOfSets;
+}
+
+//COMPLETED WORKOUT FUNCTIONS
+
+//ALL TIME
+// EFFFICIENCY
+// LAST 7 DAYS
+// MOST COMPLETED WORKOUT
+// LONGEST WORKOUT

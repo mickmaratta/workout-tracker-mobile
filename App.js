@@ -6,8 +6,6 @@ import { Colors } from "./constants/GlobalStyles";
 import { AuthContext, AuthContextProvider } from "./context/AuthContext";
 import { useContext } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { signOut } from "firebase/auth";
-import { auth } from "./firebase";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 
@@ -20,6 +18,7 @@ import ProfileScreen from "./screens/ProfileScreen";
 import ViewWorkoutScreen from "./screens/ViewWorkoutScreen";
 import IconButton from "./components/ui/IconButton";
 import TrackWorkoutScreen from "./screens/TrackWorkoutScreen";
+import SettingsScreen from "./screens/SettingsScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -29,23 +28,10 @@ function TabNavigator() {
   return (
     <Tab.Navigator
       screenOptions={({ navigation }) => ({
-        headerStyle: { backgroundColor: Colors.neutral800 },
-        headerTintColor: Colors.secondary300,
-        headerTitleStyle: { fontSize: 22 },
         tabBarStyle: { backgroundColor: Colors.neutral800 },
         tabBarActiveTintColor: Colors.primary500,
         tabBarInactiveTintColor: Colors.secondary300,
         headerShown: false,
-        headerRight: () => {
-          return (
-            <IconButton
-              onPress={() => signOut(auth)}
-              icon="log-out-outline"
-              size={28}
-              color={Colors.secondary300}
-            />
-          );
-        },
       })}
     >
       <Tab.Screen
@@ -63,7 +49,7 @@ function TabNavigator() {
         component={FavoriteWorkoutsScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="heart" color={color} size={size} />
+            <Ionicons name="star" color={color} size={size} />
           ),
         }}
       />
@@ -109,24 +95,14 @@ function AuthenticatedStack() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: Colors.neutral800 },
-        headerTintColor: Colors.neutral100,
-        headerTitleStyle: { fontSize: 22 },
         headerShown: false,
       }}
     >
-      <Stack.Screen name="TabNavigator" component={TabNavigator} 
-      options={{
-        headerShown: false,
-      }}
-      />
-      <Stack.Screen name="ManageWorkout" component={ManageWorkoutScreen}
-      options={{
-        headerShown: false,
-      }}
-      /> 
+      <Stack.Screen name="TabNavigator" component={TabNavigator} />
+      <Stack.Screen name="ManageWorkout" component={ManageWorkoutScreen} />
       <Stack.Screen name="ViewWorkout" component={ViewWorkoutScreen} />
       <Stack.Screen name="TrackWorkouts" component={TrackWorkoutScreen} />
+      <Stack.Screen name="Settings" component={SettingsScreen} options={{ presentation: "modal" }} />
     </Stack.Navigator>
   );
 }

@@ -7,7 +7,7 @@ import Button from "../components/ui/Button";
 import { Colors } from "../constants/GlobalStyles";
 import { useDispatch } from "react-redux";
 import { AuthContext } from "../context/AuthContext";
-import { formatWorkoutDuration } from "../util/helpers";
+import { calcNumOfSets, formatWorkoutDuration } from "../util/helpers";
 import { useKeepAwake } from "expo-keep-awake";
 import { v4 as uuid } from "uuid";
 import { completeDatabaseWorkout } from "../util/http";
@@ -19,8 +19,10 @@ const TrackWorkoutScreen = ({ route, navigation }) => {
   const [seconds, setSeconds] = useState(0);
   const [formattedTime, setFormattedTime] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  const [completedSets, setCompletedSets] = useState(0);
   const dispatch = useDispatch();
   const { currentUser } = useContext(AuthContext);
+  const numOfSets = calcNumOfSets(workout.exercises);
 
   useEffect(() => {
     const timer = () => {
@@ -30,6 +32,14 @@ const TrackWorkoutScreen = ({ route, navigation }) => {
     setFormattedTime(formatWorkoutDuration(seconds));
     return () => clearInterval(id);
   }, [seconds]);
+
+  function handleCompletedSets(completedSet) {
+    if (!completedSet) {
+      setCompletedSets(completedSets + 1);
+    } else {
+      setCompletedSets(completedSets - 1);
+    }
+  }
 
   function exitAlert() {
     Alert.alert("Exit Workout", "Are you sure you want to exit this workout?", [
@@ -48,50 +58,67 @@ const TrackWorkoutScreen = ({ route, navigation }) => {
       id: uuid(),
       duration: seconds.toString(),
       workoutId: workout._id,
+      sets: {
+        totalSets: numOfSets,
+        completedSets: completedSets
+      },
       createdAt: new Date().getTime(),
     };
     try {
-      await completeDatabaseWorkout(currentUser.uid, completedWorkout.id, completedWorkout);
+      await completeDatabaseWorkout(
+        currentUser.uid,
+        completedWorkout.id,
+        completedWorkout
+      );
       dispatch(completeReduxWorkout(completedWorkout));
       setModalVisible(true);
-      setTimeout(() => navigation.navigate("Workouts"), 3000);
+      setTimeout(() => navigation.navigate("Workouts"), 5000);
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
   }
 
   useKeepAwake();
   return (
-      <View style={styles.outerContainer}>
-        <Header>{workout.title}</Header>
-        <Text style={styles.durationText}>
-          Workout Duration: {formattedTime}{" "}
-        </Text>
-        <View style={styles.list}>
-          <FlatList
-            data={workout.exercises}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <>
-                <ExerciseLabel exercise={item} />
-                {item.sets.map((set) => (
-                  <Set key={set.number} set={set} trackWorkout={true} />
-                ))}
-              </>
-            )}
-          />
-        </View>
-        <View style={styles.buttonContainer}>
-          <Button buttonStyle={styles.cancelButton} onPress={exitAlert}>
-            Cancel
-          </Button>
-          <Button buttonStyle={styles.button} onPress={handleCompleteWorkout}>
-            Complete
-          </Button>
-        </View>
-        <CompletedWorkoutModal modalVisible={modalVisible} duration={formattedTime}/>
+    <View style={styles.outerContainer}>
+      <Header>{workout.title}</Header>
+      <Text style={styles.durationText}>
+        Workout Duration: {formattedTime}{" "}
+      </Text>
+      <View style={styles.list}>
+        <FlatList
+          data={workout.exercises}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <>
+              <ExerciseLabel exercise={item} />
+              {item.sets.map((set) => (
+                <Set
+                  key={set.number}
+                  set={set}
+                  trackWorkout={true}
+                  handleCompletedSets={handleCompletedSets}
+                />
+              ))}
+            </>
+          )}
+        />
       </View>
-
+      <View style={styles.buttonContainer}>
+        <Button buttonStyle={styles.cancelButton} onPress={exitAlert}>
+          Cancel
+        </Button>
+        <Button buttonStyle={styles.button} onPress={handleCompleteWorkout}>
+          Complete
+        </Button>
+      </View>
+      <CompletedWorkoutModal
+        modalVisible={modalVisible}
+        duration={formattedTime}
+        numOfSets={numOfSets}
+        completedSets={completedSets}
+      />
+    </View>
   );
 };
 
@@ -104,7 +131,8 @@ const styles = StyleSheet.create({
   },
   durationText: {
     textAlign: "center",
-    fontSize: 16,
+    fontSize: 18,
+    fontWeight: 'bold'
   },
   list: {
     flex: 1,
@@ -113,6 +141,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     marginBottom: 65,
+    marginTop: 10
   },
   button: {
     width: "40%",

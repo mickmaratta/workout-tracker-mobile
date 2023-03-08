@@ -83,3 +83,19 @@ export async function completeDatabaseWorkout(
     completedWorkout
   );
 }
+
+//FETCH COMPLETED WORKOUTS
+export async function fetchCompletedWorkouts(uid) {
+  const res = await axios.get(BACKEND_URL + `/users/${uid}/completedWorkouts.json`);
+  const completedWorkouts = [];
+  for (const key in res.data) {
+    const workoutObj = {
+      id: key,
+      createdAt: res.data[key].createdAt,
+      duration: res.data[key].duration,
+      workoutId: res.data[key].workoutId,
+    };
+    completedWorkouts.push(workoutObj);
+  }
+  return completedWorkouts;
+}

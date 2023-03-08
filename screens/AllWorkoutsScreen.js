@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React, { useContext, useState } from "react";
 import { useEffect } from "react";
 import WorkoutList from "../components/Workouts/WorkoutList";
@@ -6,10 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { setWorkouts, allWorkouts } from "../redux/workoutsSlice";
 import Header from "../components/ui/Header";
 import { AuthContext } from "../context/AuthContext";
-import { fetchDatabaseFavorites, fetchDatabaseWorkouts } from "../util/http";
+import {
+  fetchCompletedWorkouts,
+  fetchDatabaseFavorites,
+  fetchDatabaseWorkouts,
+} from "../util/http";
 import LoadingOverlay from "../components/ui/LoadingOverlay";
 import { setFavorites } from "../redux/favoritesSlice";
 import Button from "../components/ui/Button";
+import { setCompletedWorkouts } from "../redux/completedWorkoutsSlice";
+import { Colors } from "../constants/GlobalStyles";
 
 const AllWorkoutsScreen = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -27,8 +33,12 @@ const AllWorkoutsScreen = ({ navigation }) => {
         const fetchedFavWorkouts = await fetchDatabaseFavorites(
           currentUser.uid
         );
+        const fetchedCompletedWorkouts = await fetchCompletedWorkouts(
+          currentUser.uid
+        );
         dispatch(setWorkouts(fetchedWorkouts));
         dispatch(setFavorites(fetchedFavWorkouts));
+        dispatch(setCompletedWorkouts(fetchedCompletedWorkouts));
         setIsLoading(false);
       } catch (error) {
         setErr(true);
@@ -44,7 +54,7 @@ const AllWorkoutsScreen = ({ navigation }) => {
   }
 
   return (
-    <View>
+    <View style={styles.outerContainer}> 
       <Header logout={true}>All Workouts</Header>
       <WorkoutList workouts={workouts} />
       {!workouts && (
