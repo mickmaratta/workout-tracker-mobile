@@ -101,7 +101,7 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
         style={styles.favIcon}
         icon={isFavorite ? "star" : "star-outline"}
         size={32}
-        color={Colors.secondary300}
+        color={Colors.neutral800}
       />
       <SwitchSelector
         left="Collapsed"
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   deleteButton: {
-    backgroundColor: Colors.error500,
+    backgroundColor: Colors.error700,
     width: "30%",
   },
   favIcon: {

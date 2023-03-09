@@ -20,13 +20,12 @@ const Header = ({ children, back, logout, favorite }) => {
         size={30}
         color={Colors.secondary300}
       />}
-      
       {back && <Pressable onPress={() => navigation.goBack()} style={styles.backIconContainer}>
         <IconButton
           style={styles.backIcon}
           icon="arrow-back-outline"
           size={26}
-          color={Colors.secondary300}
+          color={Colors.neutral800}
         />
         <Text style={styles.backText}>Back</Text>
       </Pressable>}
@@ -38,7 +37,7 @@ export default Header;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.neutral700,
+    backgroundColor: Colors.secondary300,
     marginTop: 0,
     paddingTop: 70,
     paddingBottom: 20,
@@ -68,6 +67,6 @@ const styles = StyleSheet.create({
   },
   backText: {
     fontWeight: "bold",
-    color: Colors.secondary300
+    color: Colors.neutral800
   }
 });

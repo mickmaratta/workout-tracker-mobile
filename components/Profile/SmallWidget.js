@@ -2,10 +2,10 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { Colors } from "../../constants/GlobalStyles";
 
-const SmallWidget = () => {
+const SmallWidget = ({ children }) => {
   return (
     <View style={styles.container}>
-      <Text>Small</Text>
+      {children}
     </View>
   );
 };

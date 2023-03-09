@@ -112,7 +112,7 @@ function Navigation() {
   const { currentUser } = useContext(AuthContext);
   return (
     <>
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
       <NavigationContainer>
         {!currentUser && <AuthStack />}
         {currentUser && <AuthenticatedStack />}

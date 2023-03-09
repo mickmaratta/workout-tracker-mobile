@@ -94,6 +94,7 @@ export async function fetchCompletedWorkouts(uid) {
       createdAt: res.data[key].createdAt,
       duration: res.data[key].duration,
       workoutId: res.data[key].workoutId,
+      sets: res.data[key].sets
     };
     completedWorkouts.push(workoutObj);
   }

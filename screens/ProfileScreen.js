@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Header from "../components/ui/Header";
 import { AuthContext } from "../context/AuthContext";
 import { Colors } from "../constants/GlobalStyles";
@@ -8,28 +8,37 @@ import SmallWidget from "../components/Profile/SmallWidget";
 import { useSelector } from "react-redux";
 import { allCompletedWorkouts } from "../redux/completedWorkoutsSlice";
 import IconButton from "../components/ui/IconButton";
+import { DonutChart } from "react-native-circular-chart";
+import { calcAverageWorkoutLength, calcLongestWorkout, calcRecentWorkouts, calcWorkoutEfficiency } from "../util/helpers";
 
 const ProfileScreen = ( {navigation} ) => {
   const { currentUser } = useContext(AuthContext);
   const completedWorkouts = useSelector(allCompletedWorkouts);
+
   const numOfWorkouts = completedWorkouts.length;
+  const workoutEfficiency = calcWorkoutEfficiency(completedWorkouts);
+  const recentWorkouts = calcRecentWorkouts(completedWorkouts);
+  const longestWorkout = calcLongestWorkout(completedWorkouts);
+  const avgWorkoutDuration = calcAverageWorkoutLength(completedWorkouts)
+
 
   return (
     <View>
-      <Header>Profile</Header>
+      <Header>{currentUser.displayName ? currentUser.displayName : 'Your Profile'}</Header>
       <IconButton
         icon="settings"
         size={28}
-        color={Colors.secondary300}
+        color={Colors.neutral800}
         style={styles.settingsIcon}
         onPress={() => navigation.navigate('Settings')}
       />
       <View style={styles.container}>
-        <Text style={styles.title}>{currentUser.displayName}</Text>
         <View style={styles.widgetContainer}>
-          <BigWidget numOfWorkouts={numOfWorkouts} />
+          <BigWidget workoutEfficiency={workoutEfficiency} />
           <View style={styles.smWidgetContainer}>
-            <SmallWidget />
+            <SmallWidget>
+            
+            </SmallWidget>
             <SmallWidget />
           </View>
         </View>
@@ -57,5 +66,13 @@ const styles = StyleSheet.create({
   },
   smWidgetContainer: {
     flexDirection: "row",
+  },
+  donutChart: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 8,
+  },
+  labelValue: {
+    display: "none",
   },
 });
