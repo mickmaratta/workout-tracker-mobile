@@ -8,23 +8,27 @@ import { allFavWorkouts } from "../redux/favoritesSlice";
 
 const FavoriteWorkoutsScreen = () => {
   const favWorkoutIds = useSelector(allFavWorkouts);
-  const workouts = useSelector(allWorkouts);
+  const workouts = useSelector(allWorkouts ? allWorkouts : []);
   const [favorites, setFavorites] = useState([]);
-
+  
   //Filter all workouts to get an array of Favorites
   useEffect(() => {
-    setFavorites(
-      workouts?.filter((workout) => favWorkoutIds.includes(workout._id))
-    );
+    if (workouts) {
+      setFavorites(
+        workouts?.filter((workout) => favWorkoutIds.includes(workout._id))
+      );
+    } else{
+      setFavorites([]);
+    }
   }, [favWorkoutIds]);
 
   return (
     <View style={styles.outerContainer}>
-      <Header logout={true}>Favorites</Header>
+      <Header>Favorites</Header>
       <WorkoutList workouts={favorites} />
       {favorites.length === 0 && (
         <View style={styles.innerContainer}>
-          <Text style={styles.text}>You don't have any favorites yet</Text>
+          <Text style={styles.text}>You don't have any favorites yet!</Text>
         </View>
       )}
     </View>
@@ -37,7 +41,7 @@ const styles = StyleSheet.create({
   outerContainer: {
     flex: 1,
   },
-  innterContainer: {
+  innerContainer: {
     flex: 1,
     justifyContent: "center",
   },

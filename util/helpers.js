@@ -41,12 +41,18 @@ export function calcNumOfSets(exercises) {
 
 //COMPLETED WORKOUT FUNCTIONS
 
-//ALL TIME
 // EFFFICIENCY
-export function calcWorkoutEfficiency(workouts) {
+export function calcWorkoutEfficiency(workouts, recent) {
+  let date = new Date();
+  date.setDate(date.getDate() - 14)
+  date = date.getTime();
   let totalSets = 0;
   let completedSets = 0;
-  workouts.map(workout => {
+  let filteredWorkouts = workouts;
+  if (recent === 'recent') {
+    filteredWorkouts = workouts.filter(workout => workout.createdAt > date)
+  }
+  filteredWorkouts.map(workout => {
    totalSets = workout.sets.totalSets + totalSets;
    completedSets = workout.sets.completedSets + completedSets
   });
@@ -58,10 +64,10 @@ export function calcWorkoutEfficiency(workouts) {
   return workoutEfficiency;
 };
 
-// LAST 7 DAYS
+// LAST 14 DAYS
 export function calcRecentWorkouts(workouts) {
   let date = new Date();
-  date.setDate(date.getDate() - 7)
+  date.setDate(date.getDate() - 14)
   date = date.getTime();
   const recentWorkouts = workouts.filter(workout => workout.createdAt > date)
   return recentWorkouts.length;
@@ -75,6 +81,7 @@ export function calcLongestWorkout(workouts) {
       duration = workout.duration
     } 
   })
+  duration = formatWorkoutDuration(duration);
   return duration;
 };
 

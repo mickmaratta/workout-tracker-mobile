@@ -85,6 +85,9 @@ const TrackWorkoutScreen = ({ route, navigation }) => {
       <Text style={styles.durationText}>
         Workout Duration: {formattedTime}{" "}
       </Text>
+      <Text style={styles.setsText}>
+        Sets Completed: {completedSets} / {numOfSets}
+      </Text>
       <View style={styles.list}>
         <FlatList
           data={workout.exercises}
@@ -133,6 +136,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 18,
     fontWeight: 'bold'
+  },
+  setsText: {
+    textAlign: "center",
+    fontSize:18,
   },
   list: {
     flex: 1,

@@ -18,7 +18,7 @@ const Header = ({ children, back, logout, favorite }) => {
         style={styles.rightIcon}
         icon="log-out-outline"
         size={30}
-        color={Colors.secondary300}
+        color={Colors.neutral800}
       />}
       {back && <Pressable onPress={() => navigation.goBack()} style={styles.backIconContainer}>
         <IconButton

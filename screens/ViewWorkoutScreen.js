@@ -180,8 +180,15 @@ const styles = StyleSheet.create({
     width: "30%",
   },
   trackButton: {
-    width: "30%",
+    width: 90,
+    height: 90,
+    borderRadius: 100,
     backgroundColor: Colors.primary500,
+    justifyContent: "center",
+    shadowColor: Colors.secondary300,
+    shadowRadius: 5,
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.8,
   },
   trackButtonText: {
     paddingVertical: 6,

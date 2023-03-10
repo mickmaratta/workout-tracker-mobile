@@ -19,7 +19,7 @@ const CompletedWorkoutModal = ({
             ? 10000000
             : completedSets
           : 1,
-      color: Colors.success500,
+      color: Colors.primary500,
     },
     {
       name: "Sets Not Completed",
@@ -30,7 +30,7 @@ const CompletedWorkoutModal = ({
             : numOfSets - completedSets
           : 100,
       color:
-        numOfSets - completedSets === 0 ? Colors.success500 : Colors.error700,
+        numOfSets - completedSets === 0 ? Colors.primary500 : Colors.error700,
     },
   ];
 
@@ -39,7 +39,7 @@ const CompletedWorkoutModal = ({
       <View style={styles.container}>
         <View style={styles.textContainer}>
           <Text style={styles.successText}>Nice Work!</Text>
-          <Ionicons name="checkmark-done" size={34} color={Colors.success500} />
+          <Ionicons name="checkmark-done" size={34} color={Colors.primary500} />
         </View>
 
         <Text style={styles.statsText}>Stats:</Text>
