@@ -87,23 +87,23 @@ const styles = StyleSheet.create({
   },
   titleOuterContainer: {
     flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
     justifyContent: "space-between",
     marginBottom: 15,
     marginTop: 25,
+    marginLeft: 15,
   },
   titleInnerContainer: {
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
+    
   },
   setsContainer: {
     flexDirection: "row",
     alignItems: "center",
+    marginTop: 10,
   },
   titleText: {
     fontSize: 24,
-    marginLeft: 12,
   },
   text: {
     fontSize: 18,

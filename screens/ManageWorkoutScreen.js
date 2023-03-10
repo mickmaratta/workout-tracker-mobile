@@ -76,9 +76,12 @@ const ManageWorkoutScreen = ({ navigation, route }) => {
       setDesc("");
       setExercises([]);
       setIsAdding(false);
+      setErr({
+        title: false,
+        exercises: false,
+      });
     } catch (error) {
       setIsAdding(false);
-      setErr(true);
     }
   }
 
@@ -129,8 +132,9 @@ const ManageWorkoutScreen = ({ navigation, route }) => {
           <TextInput
             onChangeText={(text) => setTitle(text)}
             placeholder={edit ? workout.title : "Workout Title"}
-            placeholderTextColor={err.title ? Colors.error700 : Colors.neutralGray300}
-
+            placeholderTextColor={
+              err.title ? Colors.error700 : Colors.neutralGray300
+            }
             value={title}
             style={styles.titleText}
           />
@@ -160,7 +164,9 @@ const ManageWorkoutScreen = ({ navigation, route }) => {
             ]}
             onPress={() => addNewExercise()}
           >
-            <Text style={[styles.text, err.exercises && styles.errorText]}>Add Exercise</Text>
+            <Text style={[styles.text, err.exercises && styles.errorText]}>
+              Add Exercise
+            </Text>
             <IconButton icon="add-circle" size={28} color={Colors.primary500} />
           </Pressable>
         </View>

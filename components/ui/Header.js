@@ -6,29 +6,39 @@ import { Colors } from "../../constants/GlobalStyles";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from '@expo/vector-icons'
 
-const Header = ({ children, back, logout, favorite }) => {
+const Header = ({ children, back, logout, favorite, small }) => {
   const navigation = useNavigation();
-
   return (
     <View style={styles.container}>
-      <Title>{children}</Title>
-      {logout && <IconButton
-        onPress={() => signOut(auth)}
-        style={styles.rightIcon}
-        icon="log-out-outline"
-        size={30}
-        color={Colors.neutral800}
-      />}
-      {back && <Pressable onPress={() => navigation.goBack()} style={styles.backIconContainer}>
+      <Title style={styles.title}>{children}</Title>
+      {logout && (
         <IconButton
-          style={styles.backIcon}
-          icon="arrow-back-outline"
-          size={26}
+          onPress={() => signOut(auth)}
+          style={styles.rightIcon}
+          icon="log-out-outline"
+          size={30}
           color={Colors.neutral800}
         />
-        <Text style={styles.backText}>Back</Text>
-      </Pressable>}
+      )}
+      {back && (
+        <Pressable
+          onPress={() => navigation.goBack()}
+          style={({ pressed }) => [
+            styles.backIconContainer,
+            pressed && styles.pressed,
+          ]}
+        >
+          <Ionicons
+            style={styles.backIcon}
+            name="arrow-back-outline"
+            size={small ? 38 : 26}
+            color={Colors.neutral800}
+          />
+          {!small && <Text style={styles.backText}>Back</Text>}
+        </Pressable>
+      )}
     </View>
   );
 };
@@ -52,12 +62,12 @@ const styles = StyleSheet.create({
   rightIcon: {
     position: "absolute",
     right: 10,
-    top: 85,
+    top: 70,
   },
   backIconContainer: {
     position: "absolute",
     left: 10,
-    top: 85,
+    top: 60,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -67,6 +77,9 @@ const styles = StyleSheet.create({
   },
   backText: {
     fontWeight: "bold",
-    color: Colors.neutral800
-  }
+    color: Colors.neutral800,
+  },
+  pressed: {
+    opacity: 0.5,
+  },
 });

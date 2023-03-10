@@ -3,8 +3,9 @@ import React from 'react'
 import { Colors } from '../../constants/GlobalStyles'
 
 const Title = ({children, style}) => {
+  const titleLength = children.length;
   return (
-      <Text style={[styles.title, style]}>{children}</Text>
+      <Text style={[styles.title, titleLength > 12 && styles.smallTitle, style]}>{children}</Text>
   )
 }
 
@@ -12,11 +13,12 @@ export default Title
 
 const styles = StyleSheet.create({
     title: {
-        marginTop: 12,
         fontSize: 32,
         fontWeight: "bold",
         color: Colors.neutral800,
         textAlign: "center",
-        width: "100%",
+      },
+      smallTitle: {
+        fontSize: 22,
       }
 })

@@ -93,14 +93,14 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Header back={true} favorite={true}>
+      <Header back={true} favorite={true} favoriteOnPress={handleFavorite} small={true}>
         {workout.title}
       </Header>
       <IconButton
         onPress={handleFavorite}
         style={styles.favIcon}
         icon={isFavorite ? "star" : "star-outline"}
-        size={32}
+        size={26}
         color={Colors.neutral800}
       />
       <SwitchSelector
@@ -204,6 +204,6 @@ const styles = StyleSheet.create({
   favIcon: {
     position: "absolute",
     right: 15,
-    top: 80,
+    top: 65,
   },
 });
