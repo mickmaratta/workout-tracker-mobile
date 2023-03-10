@@ -1,4 +1,4 @@
-import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
+import { Alert, FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import React, { useContext, useLayoutEffect, useState } from "react";
 import SwitchSelector from "../components/ui/SwitchSelector";
 import ExerciseLabel from "../components/Workouts/ExerciseLabel";
@@ -108,7 +108,7 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
         right="Expanded"
         onPress={handleCollapse}
       />
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <View>
           <FlatList
             data={workout.exercises}
@@ -126,7 +126,7 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
           <Text style={styles.descTitle}>Description:</Text>
           <Text style={styles.descText}>{workout.desc}</Text>
         </View>
-      </View>
+      </ScrollView>
       <View style={styles.buttonContainer}>
         <Button buttonStyle={styles.deleteButton} onPress={handleDeleteAlert}>
           Delete
@@ -175,6 +175,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignItems: "center",
     marginBottom: 65,
+    marginTop: 20,
   },
   editButton: {
     width: "30%",

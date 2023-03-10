@@ -16,7 +16,6 @@ import FavoriteWorkoutsScreen from "./screens/FavoriteWorkoutsScreen";
 import ManageWorkoutScreen from "./screens/ManageWorkoutScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import ViewWorkoutScreen from "./screens/ViewWorkoutScreen";
-import IconButton from "./components/ui/IconButton";
 import TrackWorkoutScreen from "./screens/TrackWorkoutScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 
@@ -63,11 +62,11 @@ function TabNavigator() {
         }}
       />
       <Tab.Screen
-        name="Profile"
+        name="Stats"
         component={ProfileScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="person-circle-outline" color={color} size={size} />
+            <Ionicons name="stats-chart" color={color} size={size} />
           ),
         }}
       />

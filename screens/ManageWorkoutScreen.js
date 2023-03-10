@@ -8,7 +8,7 @@ import {
   TextInput,
   View,
 } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import Header from "../components/ui/Header";
 import { Colors } from "../constants/GlobalStyles";
 import { DismissKeyboard } from "../util/helpers";

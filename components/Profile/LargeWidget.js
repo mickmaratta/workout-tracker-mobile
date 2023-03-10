@@ -1,14 +1,10 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Colors } from "../../constants/GlobalStyles";
-import { Ionicons } from "@expo/vector-icons";
 import { DonutChart } from "react-native-circular-chart";
-import SwitchSelector from "../ui/SwitchSelector";
 
 const LargeWidget = ({ workoutEfficiency, onPress, selectorDesc }) => {
   const { efficiency, totalSets, completedSets } = workoutEfficiency;
-  const [reRender, setReRender] = useState(false);
-  useEffect(() => {setReRender(!reRender)}, [efficiency])
   
   const DATA = [
     {
@@ -38,10 +34,10 @@ const LargeWidget = ({ workoutEfficiency, onPress, selectorDesc }) => {
       <View style={styles.donutChart}>
         <DonutChart
           data={DATA}
-          strokeWidth={15}
-          radius={55}
+          strokeWidth={13}
+          radius={53}
           containerWidth={200}
-          containerHeight={150}
+          containerHeight={120}
           type="butt"
           startAngle={0}
           endAngle={360}
@@ -49,6 +45,7 @@ const LargeWidget = ({ workoutEfficiency, onPress, selectorDesc }) => {
           labelValueStyle={styles.donutLabelValue}
           labelTitleStyle={styles.donutTitleValue}
         />
+        <Text style={styles.percentText}>{efficiency}%</Text>
       </View>
       <View style={styles.statsContainer}>
         <View>
@@ -85,13 +82,20 @@ const styles = StyleSheet.create({
   donutChart: {
     justifyContent: "center",
     alignItems: "center",
-    marginVertical: 8,
+    marginVertical: 0,
   },
   donutLabelValue: {
     display: "none",
   },
   donutTitleValue: {
+    display: "none",
+  },
+  percentText: {
+    color: Colors.primary500,
+    marginBottom: 10,
     fontSize: 24,
+    fontWeight: "bold",
+    position: "absolute",
   },
   statsContainer: {
     paddingRight: 20,

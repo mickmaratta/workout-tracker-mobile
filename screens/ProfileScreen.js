@@ -15,18 +15,17 @@ import {
   calcWorkoutEfficiency,
 } from "../util/helpers";
 import MediumWidget from "../components/Profile/MediumWidget";
-import { Ionicons } from "@expo/vector-icons";
+import Title from "../components/ui/Title";
 
 const ProfileScreen = ({ navigation }) => {
   const { currentUser } = useContext(AuthContext);
-  const [reRender, setReRender] = useState(false)
   const completedWorkouts = useSelector(allCompletedWorkouts);
   const numOfWorkouts = completedWorkouts.length;
   const [workoutEfficiency, setWorkoutEfficiency] = useState(
-    calcWorkoutEfficiency(completedWorkouts)
+    calcWorkoutEfficiency(completedWorkouts, "recent")
   );
   const [workoutEfficiencyDesc, setWorkoutEfficiencyDesc] =
-    useState("ALL TIME");
+    useState("14 DAYS");
   const recentWorkouts = calcRecentWorkouts(completedWorkouts);
   const longestWorkout = calcLongestWorkout(completedWorkouts);
   const avgWorkoutDuration = calcAverageWorkoutLength(completedWorkouts);
@@ -34,17 +33,14 @@ const ProfileScreen = ({ navigation }) => {
   function handleSelector(recent) {
     setWorkoutEfficiency(
       recent === "ALL TIME"
-        ? calcWorkoutEfficiency(completedWorkouts)
-        : calcWorkoutEfficiency(completedWorkouts, "recent")
+        ? calcWorkoutEfficiency(completedWorkouts, "recent")
+        : calcWorkoutEfficiency(completedWorkouts)
     );
     setWorkoutEfficiencyDesc(
       workoutEfficiencyDesc === "ALL TIME" ? "14 DAYS" : "ALL TIME"
     );
   }
 
-  useEffect(() => {
-    setReRender(!reRender)
-  }, [workoutEfficiency])
   return (
     <View style={styles.container}>
       <Header>
@@ -67,6 +63,7 @@ const ProfileScreen = ({ navigation }) => {
           </Text>
         </View>
       )}
+      <Text style={styles.title}>Your Stats</Text>
       {completedWorkouts.length > 0 && (
         <View style={styles.widgetContainer}>
           <LargeWidget
@@ -115,6 +112,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     paddingBottom: 10,
     color: Colors.secondary300,
+  },
+  title: {
+    fontSize: 34,
+    textAlign: "center",
+    fontWeight: "bold",
   },
   widgetContainer: {
     margin: 15,

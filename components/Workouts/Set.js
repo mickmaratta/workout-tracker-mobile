@@ -63,9 +63,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
-    backgroundColor: Colors.neutralGray500,
+    backgroundColor: "white",
     marginVertical: 2,
+    marginHorizontal: 10,
     paddingVertical: 18,
+    borderRadius: 20,
+    shadowColor: Colors.secondary300,
+    shadowRadius: 4,
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.2,
   },
   completedSet: {
     backgroundColor: Colors.success500

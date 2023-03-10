@@ -39,7 +39,7 @@ export function calcNumOfSets(exercises) {
   return numOfSets;
 }
 
-//COMPLETED WORKOUT FUNCTIONS
+//PROFILE FUNCTIONS
 
 // EFFFICIENCY
 export function calcWorkoutEfficiency(workouts, recent) {

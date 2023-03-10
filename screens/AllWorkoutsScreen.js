@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React, { useContext, useState } from "react";
 import { useEffect } from "react";
 import WorkoutList from "../components/Workouts/WorkoutList";

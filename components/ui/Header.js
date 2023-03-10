@@ -1,4 +1,4 @@
-import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import Title from "./Title";
 import IconButton from "./IconButton";
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.secondary300,
     marginTop: 0,
     paddingTop: 70,
-    paddingBottom: 20,
+    paddingBottom: 15,
     marginBottom: 20,
     alignItems: "center",
     justifyContent: "center",

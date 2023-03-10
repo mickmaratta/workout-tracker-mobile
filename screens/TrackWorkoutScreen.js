@@ -72,7 +72,7 @@ const TrackWorkoutScreen = ({ route, navigation }) => {
       );
       dispatch(completeReduxWorkout(completedWorkout));
       setModalVisible(true);
-      setTimeout(() => navigation.navigate("Workouts"), 5000);
+      setTimeout(() => navigation.navigate("Profile"), 5000);
     } catch (error) {
       console.log(error);
     }
