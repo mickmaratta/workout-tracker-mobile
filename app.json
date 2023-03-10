@@ -28,6 +28,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "6364bb24-c229-40e5-b8fc-fc58e3c52c9d"
+      }
+    },
+    "owner": "mickmaratta"
   }
 }

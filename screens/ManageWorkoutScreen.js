@@ -169,6 +169,14 @@ const ManageWorkoutScreen = ({ navigation, route }) => {
           <IconButton />
         </View>
         <View style={styles.buttonContainer}>
+          {edit && (
+            <Button
+              buttonStyle={[styles.button, styles.cancelButton]}
+              onPress={cancelHandler}
+            >
+              Cancel
+            </Button>
+          )}
           <Button
             buttonStyle={styles.button}
             onPress={() =>
@@ -179,14 +187,6 @@ const ManageWorkoutScreen = ({ navigation, route }) => {
           >
             {edit ? "Save Changes" : "Add Workout"}
           </Button>
-          {edit && (
-            <Button
-              buttonStyle={[styles.button, styles.cancelButton]}
-              onPress={cancelHandler}
-            >
-              Cancel
-            </Button>
-          )}
         </View>
       </ScrollView>
     </DismissKeyboard>
@@ -220,10 +220,13 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "center",
+    marginBottom: 40,
   },
   button: {
-    width: "40%",
+    width: "35%",
     marginHorizontal: 10,
+    paddingVertical: 20,
+    borderRadius: 100,
   },
   cancelButton: {
     backgroundColor: Colors.error500,
