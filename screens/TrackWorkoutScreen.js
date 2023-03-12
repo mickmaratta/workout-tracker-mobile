@@ -13,6 +13,7 @@ import { v4 as uuid } from "uuid";
 import { completeDatabaseWorkout } from "../util/http";
 import { completeReduxWorkout } from "../redux/completedWorkoutsSlice";
 import CompletedWorkoutModal from "../components/Workouts/CompletedWorkoutModal";
+import ProgressBar from "../components/ui/ProgressBar";
 
 const TrackWorkoutScreen = ({ route, navigation }) => {
   const { workout } = route.params;
@@ -72,7 +73,7 @@ const TrackWorkoutScreen = ({ route, navigation }) => {
       );
       dispatch(completeReduxWorkout(completedWorkout));
       setModalVisible(true);
-      setTimeout(() => navigation.navigate("Profile"), 5000);
+      setTimeout(() => navigation.navigate("Stats"), 5000);
     } catch (error) {
       console.log(error);
     }
@@ -88,6 +89,7 @@ const TrackWorkoutScreen = ({ route, navigation }) => {
       <Text style={styles.setsText}>
         Sets Completed: {completedSets} / {numOfSets}
       </Text>
+      <ProgressBar totalSets={numOfSets} completedSets={completedSets} />
       <View style={styles.list}>
         <FlatList
           data={workout.exercises}
@@ -140,6 +142,7 @@ const styles = StyleSheet.create({
   setsText: {
     textAlign: "center",
     fontSize:18,
+    marginVertical: 8,
   },
   list: {
     flex: 1,

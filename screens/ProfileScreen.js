@@ -63,7 +63,7 @@ const ProfileScreen = ({ navigation }) => {
           </Text>
         </View>
       )}
-      <Text style={styles.title}>Your Stats</Text>
+      {completedWorkouts.length > 0 && <Text style={styles.title}>Your Stats</Text>}
       {completedWorkouts.length > 0 && (
         <View style={styles.widgetContainer}>
           <LargeWidget
