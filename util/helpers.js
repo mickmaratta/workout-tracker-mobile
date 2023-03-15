@@ -39,8 +39,21 @@ export function calcNumOfSets(exercises) {
   return numOfSets;
 }
 
-//PROFILE FUNCTIONS
+//FORMAT EXERCISES
+export function formatExercises(exercises) {
+  const exercisesArr = [];
+  for (const key in exercises) {
+    const exerciseObj = {
+      id: exercises[key].id,
+      title: exercises[key].title,
+      sets: exercises[key].sets,
+    };
+    exercisesArr.push(exerciseObj);
+  }
+  return exercisesArr
+}
 
+//PROFILE FUNCTIONS
 // EFFFICIENCY
 export function calcWorkoutEfficiency(workouts, recent) {
   let date = new Date();
