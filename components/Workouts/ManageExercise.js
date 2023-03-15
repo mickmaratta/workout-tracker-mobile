@@ -1,35 +1,56 @@
 import { FlatList, StyleSheet, Text, TextInput, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import IconButton from "../ui/IconButton";
 import { Colors } from "../../constants/GlobalStyles";
 import Set from "./Set";
 
-const ManageExercise = ({ removeExercise, exercise }) => {
+const ManageExercise = ({ removeExercise, exercise, updateExercise }) => {
   const [sets, setSets] = useState(exercise.sets.length);
+  const [updatedExercise, setUpdatedExercise] = useState(exercise);
+  const [inputs, setInputs] = useState({
+    title: exercise.title,
+    sets: exercise.sets,
+    id: exercise.id
+  })
+
+  useEffect(() => {
+    updateExercise(exercise.id, inputs)
+  }, [inputs]);
+
 
   function handleSets(value) {
+    let updatedInputSets = inputs.sets
     if (value === "minus" && sets > 1) {
       setSets(sets - 1);
-      exercise.sets = exercise.sets.filter((set) => set.number !== sets);
+      updatedInputSets.pop();
     } else if (value === "add") {
       setSets(sets + 1);
-      exercise.sets = [
-        ...exercise.sets,
+      updatedInputSets = [
+        ...updatedInputSets,
         { number: sets + 1, weight: "0", reps: "0" },
       ];
     }
+    setInputs((curInputValues) => {
+      return {...curInputValues, sets: updatedInputSets}
+    })
   }
 
-  function handleSetChange(setNumber, type, value) {
-    if (type === "weight") {
-      exercise.sets[setNumber - 1].weight = value;
-    } else {
-      exercise.sets[setNumber - 1].reps = value;
-    }
+  function inputChangeHandler(inputIdentifier, enteredAmount) {
+    setInputs((curInputValues) => {
+      return {
+        ...curInputValues,
+        [inputIdentifier]: enteredAmount
+      }
+    })
+    updateExercise(exercise.id, inputs)
   }
 
-  function handleTitleChange(value) {
-    exercise.title = value;
+  function setInputChangeHandler(enteredAmount) {
+    const updatedSets = [...inputs.sets];
+    let index = updatedSets.findIndex(set => set.number === enteredAmount.number)
+    updatedSets[index] = enteredAmount;
+    inputChangeHandler('sets', updatedSets)
+    updateExercise(exercise.id, inputs)
   }
 
   return (
@@ -39,7 +60,8 @@ const ManageExercise = ({ removeExercise, exercise }) => {
           <View style={styles.titleInnerContainer}>
             <TextInput
               placeholder={exercise.title}
-              onChangeText={(value) => handleTitleChange(value)}
+              onChangeText={inputChangeHandler.bind(this, 'title')}
+              value={inputs.title}
               style={styles.titleText}
             />
             <IconButton
@@ -70,7 +92,7 @@ const ManageExercise = ({ removeExercise, exercise }) => {
       <FlatList
         data={exercise.sets}
         renderItem={({ item }) => (
-          <Set set={item} edit={true} setChange={handleSetChange} />
+          <Set set={item} edit={true} setChange={setInputChangeHandler} />
         )}
       />
     </View>

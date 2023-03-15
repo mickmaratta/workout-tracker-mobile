@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Colors } from "../../constants/GlobalStyles";
 import IconButton from "../ui/IconButton";
 
@@ -7,11 +7,28 @@ const Set = ({ set, edit, setChange, trackWorkout, handleCompletedSets }) => {
   const [reps, setReps] = useState(set.reps);
   const [weight, setWeight] = useState(set.weight);
   const [completedSet, setCompletedSet] = useState(false)
+  const [inputs, setInputs] = useState({
+    number: set.number,
+    reps: set.reps,
+    weight: set.weight,
+  })
 
+  useEffect(() => {
+    edit && setChange(inputs)
+  }, [inputs])
   function completedSetHandler() {
     setCompletedSet(!completedSet);
     handleCompletedSets(completedSet);
   };
+
+  function inputChangeHandler(inputIdentifier, enteredAmount) {
+    setInputs((curInputValues) => {
+      return {
+        ...curInputValues,
+        [inputIdentifier]: enteredAmount
+      }
+    });
+  }
 
   if (edit === true) {
     return (
@@ -23,7 +40,7 @@ const Set = ({ set, edit, setChange, trackWorkout, handleCompletedSets }) => {
             placeholder={reps}
             style={styles.textInput}
             keyboardType="number-pad"
-            onChangeText={(value) => setChange(set.number, "reps", value)}
+            onChangeText={inputChangeHandler.bind(this, 'reps')}
           />
         </View>
         <View style={styles.textInputContainer}>
@@ -32,7 +49,7 @@ const Set = ({ set, edit, setChange, trackWorkout, handleCompletedSets }) => {
             placeholder={weight}
             style={styles.textInput}
             keyboardType="number-pad"
-            onChangeText={(value) => setChange(set.number, "weight", value)}
+            onChangeText={inputChangeHandler.bind(this, 'weight')}
           />
           <Text style={styles.text}> lbs</Text>
         </View>

@@ -25,9 +25,12 @@ import { addReduxWorkout, updateReduxWorkout } from "../redux/workoutsSlice";
 const ManageWorkoutScreen = ({ navigation, route }) => {
   const workout = route.params?.workout;
   const [edit, setEdit] = useState(!!route.params);
-  const [title, setTitle] = useState(edit ? workout.title : "");
-  const [desc, setDesc] = useState(edit ? workout.desc : "");
-  const [exercises, setExercises] = useState(edit ? workout.exercises : []);
+  const [inputs, setInputs] = useState({
+    title: edit ? workout.title : "",
+    desc: edit ? workout.desc : "",
+    exercises: edit ? workout.exercises : [],
+  })
+  const [exercises, setExercises] = useState(edit ? workout.exercises : []); 
   const [isAdding, setIsAdding] = useState(false);
   const [err, setErr] = useState({
     title: false,
@@ -48,6 +51,13 @@ const ManageWorkoutScreen = ({ navigation, route }) => {
   function removeExerciseHandler(id) {
     setExercises(exercises.filter((exercise) => exercise.id !== id));
   }
+
+  function exerciseChangeHandler(id, exercise) {
+    let updatedEx = [...exercises];
+    let index = updatedEx.findIndex(ex => ex.id === id)
+    updatedEx[index] = exercise;
+    setExercises(updatedEx);
+  };
 
   async function addWorkoutHandler(title, desc, exercises) {
     setIsAdding(true);
@@ -118,6 +128,16 @@ const ManageWorkoutScreen = ({ navigation, route }) => {
       { text: "OK", onPress: () => navigation.navigate("Workouts") },
     ]);
   }
+
+  function inputChangeHandler(inputIdentifier, enteredAmount) {
+    setInputs((curInputValues) => {
+      return {
+        ...curInputValues,
+        [inputIdentifier]: enteredAmount
+      }
+    })
+  }
+  
   //Loading Screen
   if (isAdding) {
     const message = edit ? "Updating Workout..." : "Adding Workout...";
@@ -130,19 +150,19 @@ const ManageWorkoutScreen = ({ navigation, route }) => {
         <Header back={edit}>{edit ? "Edit Workout" : "Add Workout"}</Header>
         <View style={styles.inputsContainer}>
           <TextInput
-            onChangeText={(text) => setTitle(text)}
             placeholder={edit ? workout.title : "Workout Title"}
             placeholderTextColor={
               err.title ? Colors.error700 : Colors.neutralGray300
             }
-            value={title}
+            onChangeText={inputChangeHandler.bind(this, 'title')}
+            value={inputs.title}
             style={styles.titleText}
           />
           <TextInput
-            onChangeText={(text) => setDesc(text)}
+            onChangeText={inputChangeHandler.bind(this, 'desc')}
             multiline={true}
             placeholder={edit ? workout.desc : "Description"}
-            value={desc}
+            value={inputs.desc}
             style={styles.text}
           />
           {exercises && (
@@ -153,6 +173,7 @@ const ManageWorkoutScreen = ({ navigation, route }) => {
                 <ManageExercise
                   removeExercise={removeExerciseHandler}
                   exercise={item}
+                  updateExercise={exerciseChangeHandler}
                 />
               )}
             />
@@ -187,8 +208,8 @@ const ManageWorkoutScreen = ({ navigation, route }) => {
             buttonStyle={styles.button}
             onPress={() =>
               edit
-                ? updateWorkoutHandler(title, desc, exercises)
-                : addWorkoutHandler(title, desc, exercises)
+                ? updateWorkoutHandler(inputs.title, inputs.desc, exercises)
+                : addWorkoutHandler(inputs.title, inputs.desc, exercises)
             }
           >
             {edit ? "Save Changes" : "Add Workout"}
