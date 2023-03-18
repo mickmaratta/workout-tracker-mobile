@@ -41,6 +41,8 @@ const ProfileScreen = ({ navigation }) => {
     );
   }
 
+  //console.log(longestWorkout);
+
   return (
     <View style={styles.container}>
       <Header>
