@@ -23,6 +23,7 @@ const TrackWorkoutScreen = ({ route, navigation }) => {
   const [completedSets, setCompletedSets] = useState(0);
   const dispatch = useDispatch();
   const { currentUser } = useContext(AuthContext);
+  const userToken = currentUser.stsTokenManager.accessToken
   const numOfSets = calcNumOfSets(workout.exercises);
 
   useEffect(() => {
@@ -69,7 +70,8 @@ const TrackWorkoutScreen = ({ route, navigation }) => {
       await completeDatabaseWorkout(
         currentUser.uid,
         completedWorkout.id,
-        completedWorkout
+        completedWorkout,
+        userToken
       );
       dispatch(completeReduxWorkout(completedWorkout));
       setModalVisible(true);

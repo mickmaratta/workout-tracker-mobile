@@ -26,15 +26,16 @@ const AllWorkoutsScreen = ({ navigation }) => {
 
   // Get all workouts + favorites from Firebase Database and save them to Redux
   useEffect(() => {
+    const userToken = currentUser.stsTokenManager.accessToken
     async function getWorkout() {
       setIsLoading(true);
       try {
-        const fetchedWorkouts = await fetchDatabaseWorkouts(currentUser.uid);
+        const fetchedWorkouts = await fetchDatabaseWorkouts(currentUser.uid, userToken);
         const fetchedFavWorkouts = await fetchDatabaseFavorites(
-          currentUser.uid
+          currentUser.uid, userToken
         );
         const fetchedCompletedWorkouts = await fetchCompletedWorkouts(
-          currentUser.uid
+          currentUser.uid, userToken
         );
         dispatch(setWorkouts(fetchedWorkouts));
         dispatch(setFavorites(fetchedFavWorkouts));
@@ -42,6 +43,7 @@ const AllWorkoutsScreen = ({ navigation }) => {
         setIsLoading(false);
       } catch (error) {
         setErr(true);
+        console.log(error)
       }
       setIsLoading(false);
     }

@@ -25,6 +25,7 @@ import {
 const ViewWorkoutScreen = ({ route, navigation }) => {
   const { workout } = route.params;
   const { currentUser } = useContext(AuthContext);
+  const userToken = currentUser.stsTokenManager.accessToken;
   const [collapsed, setCollapsed] = useState(true);
   const [isDeleting, setIsDeleting] = useState(false);
   const favWorkouts = useSelector(allFavWorkouts);
@@ -59,8 +60,8 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
   async function handleDelete() {
     setIsDeleting(true);
     try {
-      await deleteDatabaseWorkout(workout._id, currentUser.uid);
-      await deleteDatabaseFavorite(workout._id, currentUser.uid);
+      await deleteDatabaseWorkout(workout._id, currentUser.uid, userToken);
+      await deleteDatabaseFavorite(workout._id, currentUser.uid, userToken);
       dispatch(deleteReduxWorkout(workout._id));
       dispatch(deleteReduxFavorite(workout._id));
       navigation.navigate("Workouts");
@@ -73,11 +74,11 @@ const ViewWorkoutScreen = ({ route, navigation }) => {
     };
     try {
       if (isFavorite) {
-        await deleteDatabaseFavorite(workout._id, currentUser.uid);
+        await deleteDatabaseFavorite(workout._id, currentUser.uid, userToken);
         dispatch(deleteReduxFavorite(workout._id));
         setIsFavorite(false);
       } else {
-        await addDatabaseFavorite(workout._id, currentUser.uid, favToAdd);
+        await addDatabaseFavorite(workout._id, currentUser.uid, favToAdd, userToken);
         dispatch(addReduxFavorite(workout._id));
         setIsFavorite(true);
       }

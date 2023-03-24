@@ -7,9 +7,10 @@ export async function storeUser(user) {
 }
 
 //FETCH WORKOUTS
-export async function fetchDatabaseWorkouts(uid) {
-  const res = await axios.get(BACKEND_URL + `/users/${uid}/workouts.json`);
+export async function fetchDatabaseWorkouts(uid, accessToken) {
+  const res = await axios.get(BACKEND_URL + `/users/${uid}/workouts.json?auth=${accessToken}`);
   const workouts = [];
+  console.log(res.data)
   for (const key in res.data) {
     const workoutObj = {
       _id: key,
@@ -24,31 +25,31 @@ export async function fetchDatabaseWorkouts(uid) {
 }
 
 // ADD WORKOUT
-export async function addDatabaseWorkout(workout, workoutId, uid) {
+export async function addDatabaseWorkout(workout, workoutId, uid, accessToken) {
   const res = await axios.put(
-    BACKEND_URL + `/users/${uid}/workouts/${workoutId}.json`,
+    BACKEND_URL + `/users/${uid}/workouts/${workoutId}.json?auth=${accessToken}`,
     workout
   );
 }
 
 //UPDATE WORKOUT
-export async function updateDatabaseWorkout(workout, workoutId, uid) {
+export async function updateDatabaseWorkout(workout, workoutId, uid, accessToken) {
   return await axios.put(
-    BACKEND_URL + `/users/${uid}/workouts/${workoutId}.json`,
+    BACKEND_URL + `/users/${uid}/workouts/${workoutId}.json?auth=${accessToken}`,
     workout
   );
 }
 
 //DELETE WORKOUT
-export async function deleteDatabaseWorkout(workoutId, uid) {
+export async function deleteDatabaseWorkout(workoutId, uid, accessToken) {
   return await axios.delete(
-    BACKEND_URL + `/users/${uid}/workouts/${workoutId}.json`
+    BACKEND_URL + `/users/${uid}/workouts/${workoutId}.json?auth=${accessToken}`
   );
 }
 
 //FETCH FAVORITES
-export async function fetchDatabaseFavorites(uid) {
-  const res = await axios.get(BACKEND_URL + `/users/${uid}/favWorkouts.json`);
+export async function fetchDatabaseFavorites(uid, accessToken) {
+  const res = await axios.get(BACKEND_URL + `/users/${uid}/favWorkouts.json?auth=${accessToken}`);
   const favWorkouts = [];
   for (const key in res.data) {
     const favId = key;
@@ -58,17 +59,17 @@ export async function fetchDatabaseFavorites(uid) {
 }
 
 //ADD FAVORITE
-export async function addDatabaseFavorite(workoutId, uid, favToAdd) {
+export async function addDatabaseFavorite(workoutId, uid, favToAdd, accessToken) {
   await axios.put(
-    BACKEND_URL + `/users/${uid}/favWorkouts/${workoutId}.json`,
+    BACKEND_URL + `/users/${uid}/favWorkouts/${workoutId}.json?auth=${accessToken}`,
     favToAdd
   );
 }
 
 //DELETE FAVORITE
-export async function deleteDatabaseFavorite(workoutId, uid) {
+export async function deleteDatabaseFavorite(workoutId, uid, accessToken) {
   return await axios.delete(
-    BACKEND_URL + `/users/${uid}/favWorkouts/${workoutId}.json`
+    BACKEND_URL + `/users/${uid}/favWorkouts/${workoutId}.json?auth=${accessToken}`
   );
 }
 
@@ -76,17 +77,18 @@ export async function deleteDatabaseFavorite(workoutId, uid) {
 export async function completeDatabaseWorkout(
   uid,
   completedWorkoutId,
-  completedWorkout
+  completedWorkout,
+  accessToken
 ) {
   await axios.put(
-    BACKEND_URL + `/users/${uid}/completedWorkouts/${completedWorkoutId}.json`,
+    BACKEND_URL + `/users/${uid}/completedWorkouts/${completedWorkoutId}.json?auth=${accessToken}`,
     completedWorkout
   );
 }
 
 //FETCH COMPLETED WORKOUTS
-export async function fetchCompletedWorkouts(uid) {
-  const res = await axios.get(BACKEND_URL + `/users/${uid}/completedWorkouts.json`);
+export async function fetchCompletedWorkouts(uid, accessToken) {
+  const res = await axios.get(BACKEND_URL + `/users/${uid}/completedWorkouts.json?auth=${accessToken}`);
   const completedWorkouts = [];
   for (const key in res.data) {
     const workoutObj = {

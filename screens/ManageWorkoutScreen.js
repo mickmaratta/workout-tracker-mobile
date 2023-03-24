@@ -37,6 +37,7 @@ const ManageWorkoutScreen = ({ navigation, route }) => {
     exercises: false,
   });
   const { currentUser } = useContext(AuthContext);
+  const userToken = currentUser.stsTokenManager.accessToken
   const dispatch = useDispatch();
 
   function addNewExercise() {
@@ -79,7 +80,7 @@ const ManageWorkoutScreen = ({ navigation, route }) => {
     }
 
     try {
-      await addDatabaseWorkout(workoutToAdd, workoutToAdd._id, currentUser.uid);
+      await addDatabaseWorkout(workoutToAdd, workoutToAdd._id, currentUser.uid, userToken);
       dispatch(addReduxWorkout(workoutToAdd));
       navigation.navigate("Workouts");
       setTitle("");
@@ -109,7 +110,8 @@ const ManageWorkoutScreen = ({ navigation, route }) => {
       await updateDatabaseWorkout(
         workoutToUpdate,
         workout._id,
-        currentUser.uid
+        currentUser.uid,
+        userToken
       );
       dispatch(updateReduxWorkout(workoutToUpdate));
       navigation.navigate("Workouts");
